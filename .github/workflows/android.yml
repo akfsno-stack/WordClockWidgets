@@ -22,7 +22,7 @@ jobs:
     - name: Set up Android SDK
       uses: android-actions/setup-android@v4
       with:
-        packages: platforms;android-33 build-tools;33.0.2 ndk;23.1.7779620
+        packages: platforms;android-33 build-tools;33.0.2 cmdline-tools;latest ndk;23.1.7779620
     - name: Accept Android SDK licenses
       run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
     - name: Set ANDROID_HOME
