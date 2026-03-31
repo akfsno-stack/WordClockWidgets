@@ -94,6 +94,7 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
+        scheduleNextTick(context);
     }
 
     protected abstract int getLayoutResource(Context context, int appWidgetId);
@@ -118,7 +119,7 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         int year = calendar.get(Calendar.YEAR);
 
         String hourText = use12Hour ? NumberToWords.convertHour(hour) : NumberToWords.convertHour24(rawHour);
-        String minuteText = NumberToWords.convertMinute(minute);
+        String minuteText = NumberToWords.convertMinute(minute, addZero);
         String dayNightText = NumberToWords.getDayNight(rawHour);
         String dayOfWeekText = NumberToWords.getDayOfWeek(dayOfWeek);
         String dateText = NumberToWords.convertDate(day, month, year);
@@ -127,18 +128,19 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         boolean showDate = WidgetPreferences.getShowDate(context, appWidgetId, false);
         boolean showDayOfWeek = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, false);
         boolean secondsAsWords = WidgetPreferences.getSecondsAsWords(context, appWidgetId, true);
+        boolean addZero = WidgetPreferences.getAddZero(context, appWidgetId, false);
         String secondsDisplayMode = WidgetPreferences.getSecondsDisplayMode(context, appWidgetId, "Горизонтально");
 
         String secondText;
         if (secondsDisplayMode.equals("Вертикально")) {
             if (secondsAsWords) {
-                secondText = android.text.TextUtils.join("\n", NumberToWords.convertSecondVertical(second, true));
+                secondText = android.text.TextUtils.join("\n", NumberToWords.convertSecondVertical(second, true, addZero));
             } else {
                 secondText = String.format("%02d", second);
                 secondText = secondText.charAt(0) + "\n" + secondText.charAt(1);
             }
         } else {
-            secondText = NumberToWords.convertSecond(second, secondsAsWords);
+            secondText = NumberToWords.convertSecond(second, secondsAsWords, addZero);
         }
 
         RemoteViews views = new RemoteViews(context.getPackageName(), getLayoutResource(context, appWidgetId));
@@ -200,35 +202,40 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         } else {
             views.setTextColor(R.id.hour_text, blockEnabled ? blockBorderColor : textColor);
             views.setTextViewTextSize(R.id.hour_text, 0, fontSize);
-            views.setViewPadding(R.id.hour_text, hourOffsetX, hourOffsetY, 0, 0);
+            views.setViewTranslationX(R.id.hour_text, hourOffsetX);
+            views.setViewTranslationY(R.id.hour_text, hourOffsetY);
             if (blockEnabled) {
                 views.setInt(R.id.hour_text, "setBackgroundColor", blockBackgroundColor);
             }
 
             views.setTextColor(R.id.minute_text, blockEnabled ? blockBorderColor : textColor);
             views.setTextViewTextSize(R.id.minute_text, 0, minuteFontSize);
-            views.setViewPadding(R.id.minute_text, minuteOffsetX, minuteOffsetY, 0, 0);
+            views.setViewTranslationX(R.id.minute_text, minuteOffsetX);
+            views.setViewTranslationY(R.id.minute_text, minuteOffsetY);
             if (blockEnabled) {
                 views.setInt(R.id.minute_text, "setBackgroundColor", blockBackgroundColor);
             }
 
-            views.setTextColor(R.id.day_night_text, blockEnabled ? blockBorderColor : borderColor);
+            views.setTextColor(R.id.day_night_text, blockEnabled ? blockBorderColor : textColor);
             views.setTextViewTextSize(R.id.day_night_text, 0, fontSize * 0.75f);
-            views.setViewPadding(R.id.day_night_text, dayNightOffsetX, dayNightOffsetY, 0, 0);
+            views.setViewTranslationX(R.id.day_night_text, dayNightOffsetX);
+            views.setViewTranslationY(R.id.day_night_text, dayNightOffsetY);
             if (blockEnabled) {
                 views.setInt(R.id.day_night_text, "setBackgroundColor", blockBackgroundColor);
             }
 
             views.setTextColor(R.id.day_of_week_text, blockEnabled ? blockBorderColor : textColor);
             views.setTextViewTextSize(R.id.day_of_week_text, 0, fontSize * 0.6f);
-            views.setViewPadding(R.id.day_of_week_text, dayOfWeekOffsetX, dayOfWeekOffsetY, 0, 0);
+            views.setViewTranslationX(R.id.day_of_week_text, dayOfWeekOffsetX);
+            views.setViewTranslationY(R.id.day_of_week_text, dayOfWeekOffsetY);
             if (blockEnabled) {
                 views.setInt(R.id.day_of_week_text, "setBackgroundColor", blockBackgroundColor);
             }
             
             views.setTextColor(R.id.date_text, blockEnabled ? blockBorderColor : textColor);
             views.setTextViewTextSize(R.id.date_text, 0, fontSize * 0.5f);
-            views.setViewPadding(R.id.date_text, dateOffsetX, dateOffsetY, 0, 0);
+            views.setViewTranslationX(R.id.date_text, dateOffsetX);
+            views.setViewTranslationY(R.id.date_text, dateOffsetY);
             if (blockEnabled) {
                 views.setInt(R.id.date_text, "setBackgroundColor", blockBackgroundColor);
             }
@@ -240,7 +247,8 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
 
             views.setTextColor(R.id.second_text, blockEnabled ? blockBorderColor : textColor);
             views.setTextViewTextSize(R.id.second_text, 0, secondFontSize);
-            views.setViewPadding(R.id.second_text, secondOffsetX, secondOffsetY, 0, 0);
+            views.setViewTranslationX(R.id.second_text, secondOffsetX);
+            views.setViewTranslationY(R.id.second_text, secondOffsetY);
             if (blockEnabled) {
                 views.setInt(R.id.second_text, "setBackgroundColor", blockBackgroundColor);
             }

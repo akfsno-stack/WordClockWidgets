@@ -37,17 +37,33 @@ public class NumberToWords {
         return "";
     }
 
-    public static String convertSecond(int second, boolean useWords) {
+    public static String convertSecond(int second, boolean useWords, boolean addZero) {
         if (useWords) {
-            return convert(second);
+            if (addZero && second >= 1 && second <= 9) {
+                return "ноль " + convertSecondOrdinal(second);
+            }
+            return convertSecondOrdinal(second);
         } else {
             return String.valueOf(second);
         }
     }
 
-    public static String[] convertSecondVertical(int second, boolean useWords) {
+    private static String convertSecondOrdinal(int second) {
+        if (second == 0) return "ноль";
+        if (second == 1) return "одна";
+        if (second == 2) return "две";
+        if (second < 10) return units[second];
+        if (second < 20) return teens[second - 10];
+        int ten = second / 10;
+        int unit = second % 10;
+        String tenStr = tens[ten];
+        String unitStr = unit == 1 ? "одна" : unit == 2 ? "две" : (unit > 0 ? " " + units[unit] : "");
+        return tenStr + unitStr;
+    }
+
+    public static String[] convertSecondVertical(int second, boolean useWords, boolean addZero) {
         if (useWords) {
-            String fullText = convert(second);
+            String fullText = convertSecond(second, true, addZero);
             String[] words = fullText.split(" ");
             return words;
         } else {
@@ -55,9 +71,12 @@ public class NumberToWords {
         }
     }
 
-    public static String convertMinute(int minute) {
+    public static String convertMinute(int minute, boolean addZero) {
         if (minute == 0) {
             return "ноль";
+        }
+        if (addZero && minute >= 1 && minute <= 9) {
+            return "ноль " + convert(minute);
         }
         if (minute < 60) {
             return convert(minute);
@@ -116,7 +135,10 @@ public class NumberToWords {
     }
 
     public static String getDayNight(int hour) {
-        return (hour >= 6 && hour < 18) ? "дня" : "ночи";
+        if (hour >= 4 && hour < 12) return "утра";
+        if (hour >= 12 && hour < 17) return "дня";
+        if (hour >= 17 && hour < 23) return "вечера";
+        return "ночи";
     }
 
     private static final String[] daysOfWeek = {

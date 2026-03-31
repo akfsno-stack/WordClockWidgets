@@ -72,6 +72,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ConstructorActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme" />
+
     </application>
 
 </manifest>

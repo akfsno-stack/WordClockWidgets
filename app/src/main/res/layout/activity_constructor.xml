@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Конструктор виджета"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <CheckBox
+        android:id="@+id/add_zero_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+ 0 для цифр"
+        android:layout_marginBottom="16dp" />
+
+    <ExpandableListView
+        android:id="@+id/block_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <FrameLayout
+        android:id="@+id/preview_container"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/widget_border"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/preview_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Четыре"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/preview_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="пятнадцать"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/preview_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="тридцать"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/preview_day_night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="дня"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="18sp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/preview_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="двадцать первое марта"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/preview_day_of_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="понедельник"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/joystick_up"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="↑" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/joystick_left"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="←" />
+
+            <TextView
+                android:id="@+id/coordinates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(0,0)"
+                android:textSize="12sp"
+                android:layout_gravity="center" />
+
+            <Button
+                android:id="@+id/joystick_right"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="→" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/joystick_down"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="↓" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/reset_all_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Сбросить всё" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Сохранить" />
+
+        <Button
+            android:id="@+id/apply_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Применить" />
+
+    </LinearLayout>
+
+</LinearLayout>

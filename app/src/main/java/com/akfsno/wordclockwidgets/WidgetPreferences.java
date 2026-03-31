@@ -147,6 +147,16 @@ public class WidgetPreferences {
         return prefs.getBoolean("showDayOfWeek_" + appWidgetId, defaultValue);
     }
 
+    public static void saveAddZero(Context context, int appWidgetId, boolean addZero) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("addZero_" + appWidgetId, addZero).apply();
+    }
+
+    public static boolean getAddZero(Context context, int appWidgetId, boolean defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean("addZero_" + appWidgetId, defaultValue);
+    }
+
     public static void saveUse12HourFormat(Context context, int appWidgetId, boolean use12Hour) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         prefs.edit().putBoolean("use12HourFormat_" + appWidgetId, use12Hour).apply();
