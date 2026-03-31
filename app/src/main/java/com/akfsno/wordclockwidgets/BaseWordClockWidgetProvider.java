@@ -75,7 +75,7 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    protected abstract int getLayoutResource(Context context, int appWidgetId);
+    protected abstract int getLayoutResource();
 
     protected abstract void setTexts(RemoteViews views, String hourText, String minuteText, String dayNightText, String dayOfWeekText, String dateText);
 
@@ -103,45 +103,30 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         String dateText = NumberToWords.convertDate(day, month, year);
 
         boolean showSeconds = WidgetPreferences.getShowSeconds(context, appWidgetId, false);
-        boolean secondsAsWords = WidgetPreferences.getSecondsAsWords(context, appWidgetId, true);
         boolean showDate = WidgetPreferences.getShowDate(context, appWidgetId, false);
         boolean showDayOfWeek = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, false);
 
-        RemoteViews views = new RemoteViews(context.getPackageName(), getLayoutResource(context, appWidgetId));
-        setTexts(views, hourText, minuteText, dayNightText, dayOfWeekText, dateText);
-
-        if (getLayoutResource(context, appWidgetId) != R.layout.horizontal_widget_layout) {
-            String secondText = "";
-            if (showSeconds) {
-                secondText = NumberToWords.convertSecond(second, secondsAsWords);
-            }
-            views.setTextViewText(R.id.second_text, secondText);
-            views.setViewVisibility(R.id.second_text, showSeconds ? View.VISIBLE : View.GONE);
+        if (showSeconds) {
+            minuteText = minuteText + " " + NumberToWords.convertMinute(second);
         }
+
+        RemoteViews views = new RemoteViews(context.getPackageName(), getLayoutResource());
+        setTexts(views, hourText, minuteText, dayNightText, dayOfWeekText, dateText);
 
         int textColor = WidgetPreferences.getColor(context, appWidgetId, getDefaultTextColor());
         float fontSize = WidgetPreferences.getFontSize(context, appWidgetId, 24f);
-        float minuteFontSize = WidgetPreferences.getMinuteFontSize(context, appWidgetId, fontSize);
-        float secondFontSize = WidgetPreferences.getSecondFontSize(context, appWidgetId, fontSize * 0.75f);
         int borderColor = WidgetPreferences.getBorderColor(context, appWidgetId, getDefaultBorderColor());
         int backgroundColor = WidgetPreferences.getBackgroundColor(context, appWidgetId, Color.WHITE);
         int backgroundAlpha = WidgetPreferences.getBackgroundAlpha(context, appWidgetId, 255);
         int bgColor = Color.argb(backgroundAlpha, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor));
         views.setInt(R.id.widget_container, "setBackgroundColor", bgColor);
 
+        int hourOffsetX = WidgetPreferences.getOffsetX(context, appWidgetId, "hour", 0);
+        int hourOffsetY = WidgetPreferences.getOffsetY(context, appWidgetId, "hour", 0);
         int minuteOffsetX = WidgetPreferences.getOffsetX(context, appWidgetId, "minute", 0);
         int minuteOffsetY = WidgetPreferences.getOffsetY(context, appWidgetId, "minute", 0);
 
-        int secondOffsetX = WidgetPreferences.getSecondOffsetX(context, appWidgetId, 0);
-        int secondOffsetY = WidgetPreferences.getSecondOffsetY(context, appWidgetId, 0);
-        int dateOffsetX = WidgetPreferences.getDateOffsetX(context, appWidgetId, 0);
-        int dateOffsetY = WidgetPreferences.getDateOffsetY(context, appWidgetId, 0);
-        int dayOfWeekOffsetX = WidgetPreferences.getDayOfWeekOffsetX(context, appWidgetId, 0);
-        int dayOfWeekOffsetY = WidgetPreferences.getDayOfWeekOffsetY(context, appWidgetId, 0);
-        int dayNightOffsetX = WidgetPreferences.getDayNightOffsetX(context, appWidgetId, 0);
-        int dayNightOffsetY = WidgetPreferences.getDayNightOffsetY(context, appWidgetId, 0);
-
-        if (getLayoutResource(context, appWidgetId) == R.layout.horizontal_widget_layout) {
+        if (getLayoutResource() == R.layout.horizontal_widget_layout) {
             views.setTextColor(R.id.time_text, textColor);
             views.setTextViewTextSize(R.id.time_text, 0, fontSize);
         } else {
@@ -149,26 +134,24 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
             views.setTextViewTextSize(R.id.hour_text, 0, fontSize);
             views.setViewPadding(R.id.hour_text, hourOffsetX, hourOffsetY, 0, 0);
 
-            views.setTextColor(R.id.second_text, textColor);
-            views.setTextViewTextSize(R.id.second_text, 0, secondFontSize);
-            views.setViewPadding(R.id.second_text, secondOffsetX, secondOffsetY, 0, 0);
+            views.setTextColor(R.id.minute_text, textColor);
+            views.setTextViewTextSize(R.id.minute_text, 0, fontSize);
+            views.setViewPadding(R.id.minute_text, minuteOffsetX, minuteOffsetY, 0, 0);
 
             views.setTextColor(R.id.day_night_text, borderColor);
             views.setTextViewTextSize(R.id.day_night_text, 0, fontSize * 0.75f);
-            views.setViewPadding(R.id.day_night_text, dayNightOffsetX, dayNightOffsetY, 0, 0);
+            views.setViewPadding(R.id.day_night_text, hourOffsetX / 2, hourOffsetY / 2, 0, 0);
 
             views.setTextColor(R.id.day_of_week_text, textColor);
             views.setTextViewTextSize(R.id.day_of_week_text, 0, fontSize * 0.6f);
-            views.setViewPadding(R.id.day_of_week_text, dayOfWeekOffsetX, dayOfWeekOffsetY, 0, 0);
-
             views.setTextColor(R.id.date_text, textColor);
             views.setTextViewTextSize(R.id.date_text, 0, fontSize * 0.5f);
-            views.setViewPadding(R.id.date_text, dateOffsetX, dateOffsetY, 0, 0);
 
             views.setTextViewText(R.id.day_of_week_text, showDayOfWeek ? dayOfWeekText : "");
             views.setTextViewText(R.id.date_text, showDate ? dateText : "");
             views.setViewVisibility(R.id.day_of_week_text, showDayOfWeek ? View.VISIBLE : View.GONE);
             views.setViewVisibility(R.id.date_text, showDate ? View.VISIBLE : View.GONE);
+        }
 
         Intent configIntent = new Intent(context, WidgetConfigureActivity.class);
         configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);

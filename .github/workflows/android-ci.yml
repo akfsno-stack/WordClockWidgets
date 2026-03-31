@@ -27,6 +27,10 @@ jobs:
       - name: Accept Android SDK licenses
         run: yes | sdkmanager --licenses
 
+      - name: Ensure local.properties points to SDK
+        run: |
+          echo "sdk.dir=/usr/local/lib/android/sdk" > local.properties
+
       - name: Build debug APK
         run: ./gradlew clean assembleDebug --no-daemon
 
