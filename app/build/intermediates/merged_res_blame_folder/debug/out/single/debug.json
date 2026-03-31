@@ -1,0 +1,118 @@
+[
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_blue_word_clock_widget_info.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/blue_word_clock_widget_info.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/layout_widget_layout_blue.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/layout/widget_layout_blue.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_data_extraction_rules.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_word_clock_widget_large_info.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/word_clock_widget_large_info.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_horizontal_word_clock_widget_info.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/horizontal_word_clock_widget_info.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/layout_extended_widget_layout.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/layout/extended_widget_layout.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/drawable_widget_border_green.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/drawable/widget_border_green.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/layout_activity_configure.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/layout/activity_configure.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/layout_widget_layout_neon.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/layout/widget_layout_neon.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/drawable_ic_launcher.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/drawable_widget_preview.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/drawable/widget_preview.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_backup_rules.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_neon_word_clock_widget_info.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/neon_word_clock_widget_info.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_word_clock_widget_info.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/word_clock_widget_info.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/layout_widget_layout_green.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/layout/widget_layout_green.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_green_word_clock_widget_info.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/green_word_clock_widget_info.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_extended_word_clock_widget_info.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/extended_word_clock_widget_info.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/layout_activity_main.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/drawable_widget_border_neon.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/drawable/widget_border_neon.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/layout_widget_layout_acid.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/layout/widget_layout_acid.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/drawable_widget_border_acid.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/drawable/widget_border_acid.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/layout_horizontal_widget_layout.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/layout/horizontal_widget_layout.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/layout_widget_layout.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/layout/widget_layout.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/drawable_ic_launcher_round.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/drawable/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_acid_word_clock_widget_info.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/acid_word_clock_widget_info.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/drawable_widget_border.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/drawable/widget_border.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/drawable_horizontal_widget_border.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/drawable/horizontal_widget_border.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/xml_word_clock_widget_small_info.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/xml/word_clock_widget_small_info.xml"
+    },
+    {
+        "merged": "com.akfsno.wordclockwidgets.app-merged_res-21:/drawable_widget_border_blue.xml.flat",
+        "source": "com.akfsno.wordclockwidgets.app-main-23:/drawable/widget_border_blue.xml"
+    }
+]

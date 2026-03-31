@@ -1,0 +1,164 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.akfsno.wordclockwidgets"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="33" />
+10
+11    <permission
+11-->[androidx.core:core:1.9.0] /home/codespace/.gradle/caches/transforms-3/0a47e19d86eabfeb1244e0b9792219bd/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+12        android:name="com.akfsno.wordclockwidgets.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+12-->[androidx.core:core:1.9.0] /home/codespace/.gradle/caches/transforms-3/0a47e19d86eabfeb1244e0b9792219bd/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+13        android:protectionLevel="signature" />
+13-->[androidx.core:core:1.9.0] /home/codespace/.gradle/caches/transforms-3/0a47e19d86eabfeb1244e0b9792219bd/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+14
+15    <uses-permission android:name="com.akfsno.wordclockwidgets.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+15-->[androidx.core:core:1.9.0] /home/codespace/.gradle/caches/transforms-3/0a47e19d86eabfeb1244e0b9792219bd/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+15-->[androidx.core:core:1.9.0] /home/codespace/.gradle/caches/transforms-3/0a47e19d86eabfeb1244e0b9792219bd/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+16
+17    <application
+17-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:5:5-65:19
+18        android:allowBackup="true"
+18-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:6:9-35
+19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+19-->[androidx.core:core:1.9.0] /home/codespace/.gradle/caches/transforms-3/0a47e19d86eabfeb1244e0b9792219bd/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+20        android:dataExtractionRules="@xml/data_extraction_rules"
+20-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:7:9-65
+21        android:debuggable="true"
+22        android:extractNativeLibs="true"
+23        android:fullBackupContent="@xml/backup_rules"
+23-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:8:9-54
+24        android:icon="@drawable/ic_launcher"
+24-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:9:9-45
+25        android:label="@string/app_name"
+25-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:10:9-41
+26        android:roundIcon="@drawable/ic_launcher_round"
+26-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:11:9-56
+27        android:supportsRtl="true"
+27-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:12:9-35
+28        android:theme="@style/AppTheme" >
+28-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:13:9-40
+29        <activity
+29-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:16:9-24:20
+30            android:name="com.akfsno.wordclockwidgets.MainActivity"
+30-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:17:13-41
+31            android:exported="true"
+31-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:18:13-36
+32            android:theme="@style/AppTheme" >
+32-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:19:13-44
+33            <intent-filter>
+33-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:20:13-23:29
+34                <action android:name="android.intent.action.MAIN" />
+34-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:21:17-69
+34-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:21:25-66
+35
+36                <category android:name="android.intent.category.LAUNCHER" />
+36-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:22:17-77
+36-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:22:27-74
+37            </intent-filter>
+38        </activity>
+39
+40        <receiver
+40-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:26:9-34:20
+41            android:name="com.akfsno.wordclockwidgets.WordClockWidgetProvider"
+41-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:26:19-58
+42            android:exported="true" >
+42-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:27:13-36
+43            <intent-filter>
+43-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:28:13-30:29
+44                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+44-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:29:17-84
+44-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:29:25-81
+45            </intent-filter>
+46
+47            <meta-data
+47-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:31:13-33:66
+48                android:name="android.appwidget.provider"
+48-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:32:17-58
+49                android:resource="@xml/word_clock_widget_info" />
+49-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:33:17-63
+50        </receiver>
+51        <receiver
+51-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:36:9-44:20
+52            android:name="com.akfsno.wordclockwidgets.HorizontalWordClockWidgetProvider"
+52-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:36:19-68
+53            android:exported="true" >
+53-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:37:13-36
+54            <intent-filter>
+54-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:28:13-30:29
+55                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+55-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:29:17-84
+55-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:29:25-81
+56            </intent-filter>
+57
+58            <meta-data
+58-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:31:13-33:66
+59                android:name="android.appwidget.provider"
+59-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:32:17-58
+60                android:resource="@xml/horizontal_word_clock_widget_info" />
+60-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:33:17-63
+61        </receiver>
+62        <receiver
+62-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:46:9-54:20
+63            android:name="com.akfsno.wordclockwidgets.NeonWordClockWidgetProvider"
+63-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:46:19-62
+64            android:exported="true" >
+64-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:47:13-36
+65            <intent-filter>
+65-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:28:13-30:29
+66                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+66-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:29:17-84
+66-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:29:25-81
+67            </intent-filter>
+68
+69            <meta-data
+69-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:31:13-33:66
+70                android:name="android.appwidget.provider"
+70-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:32:17-58
+71                android:resource="@xml/neon_word_clock_widget_info" />
+71-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:33:17-63
+72        </receiver>
+73
+74        <activity
+74-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:56:9-63:20
+75            android:name="com.akfsno.wordclockwidgets.WidgetConfigureActivity"
+75-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:57:13-52
+76            android:exported="true"
+76-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:58:13-36
+77            android:theme="@style/AppTheme" >
+77-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:59:13-44
+78            <intent-filter>
+78-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:60:13-62:29
+79                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+79-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:61:17-87
+79-->/workspaces/WordClockWidgets/app/src/main/AndroidManifest.xml:61:25-84
+80            </intent-filter>
+81        </activity>
+82
+83        <provider
+83-->[androidx.emoji2:emoji2:1.2.0] /home/codespace/.gradle/caches/transforms-3/4f6c057863702a7a72c36d89087f3037/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+84            android:name="androidx.startup.InitializationProvider"
+84-->[androidx.emoji2:emoji2:1.2.0] /home/codespace/.gradle/caches/transforms-3/4f6c057863702a7a72c36d89087f3037/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+85            android:authorities="com.akfsno.wordclockwidgets.androidx-startup"
+85-->[androidx.emoji2:emoji2:1.2.0] /home/codespace/.gradle/caches/transforms-3/4f6c057863702a7a72c36d89087f3037/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+86            android:exported="false" >
+86-->[androidx.emoji2:emoji2:1.2.0] /home/codespace/.gradle/caches/transforms-3/4f6c057863702a7a72c36d89087f3037/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+87            <meta-data
+87-->[androidx.emoji2:emoji2:1.2.0] /home/codespace/.gradle/caches/transforms-3/4f6c057863702a7a72c36d89087f3037/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+88                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+88-->[androidx.emoji2:emoji2:1.2.0] /home/codespace/.gradle/caches/transforms-3/4f6c057863702a7a72c36d89087f3037/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+89                android:value="androidx.startup" />
+89-->[androidx.emoji2:emoji2:1.2.0] /home/codespace/.gradle/caches/transforms-3/4f6c057863702a7a72c36d89087f3037/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+90            <meta-data
+90-->[androidx.lifecycle:lifecycle-process:2.4.1] /home/codespace/.gradle/caches/transforms-3/bd7136c68b4aacf5fc91e0a061fb68c4/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+91                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+91-->[androidx.lifecycle:lifecycle-process:2.4.1] /home/codespace/.gradle/caches/transforms-3/bd7136c68b4aacf5fc91e0a061fb68c4/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+92                android:value="androidx.startup" />
+92-->[androidx.lifecycle:lifecycle-process:2.4.1] /home/codespace/.gradle/caches/transforms-3/bd7136c68b4aacf5fc91e0a061fb68c4/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+93        </provider>
+94    </application>
+95
+96</manifest>
