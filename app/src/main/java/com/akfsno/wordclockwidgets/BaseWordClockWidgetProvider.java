@@ -94,7 +94,7 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
-        scheduleNextTick(context);
+        
     }
 
     protected abstract int getLayoutResource(Context context, int appWidgetId);
