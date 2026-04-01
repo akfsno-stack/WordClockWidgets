@@ -15,12 +15,74 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp" />
 
-    <CheckBox
-        android:id="@+id/add_zero_checkbox"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="+ 0 для цифр"
-        android:layout_marginBottom="16dp" />
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:background="#EFEFEF"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Общие настройки"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Цвет фона:" />
+
+        <Button
+            android:id="@+id/background_color_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Цвет фона" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Непрозрачность фона:" />
+
+        <SeekBar
+            android:id="@+id/background_alpha_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="255" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Цвет рамки:" />
+
+        <Button
+            android:id="@+id/border_color_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Цвет рамки" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Толщина рамки:" />
+
+        <SeekBar
+            android:id="@+id/border_width_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="20"
+            android:progress="2" />
+
+        <CheckBox
+            android:id="@+id/use_12h_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12/24-часовой режим (включено 12)" />
+    </LinearLayout>
 
     <ExpandableListView
         android:id="@+id/block_list"
@@ -94,49 +156,76 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="center"
         android:layout_marginTop="16dp">
 
-        <Button
-            android:id="@+id/joystick_up"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:text="↑" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/joystick_up"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="↑" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
             <Button
                 android:id="@+id/joystick_left"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:text="←" />
-
             <TextView
                 android:id="@+id/coordinates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(0,0)"
                 android:textSize="12sp"
-                android:layout_gravity="center" />
-
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp" />
             <Button
                 android:id="@+id/joystick_right"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:text="→" />
-
         </LinearLayout>
 
-        <Button
-            android:id="@+id/joystick_down"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:text="↓" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/joystick_down"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="↓" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

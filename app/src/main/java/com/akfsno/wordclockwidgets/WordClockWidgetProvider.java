@@ -7,23 +7,18 @@ public class WordClockWidgetProvider extends BaseWordClockWidgetProvider {
 
     @Override
     protected int getLayoutResource(Context context, int appWidgetId) {
-        String style = WidgetPreferences.getStyle(context, appWidgetId, "Базовый");
-        switch (style) {
-            case "Базовый": return R.layout.widget_layout;
-            case "Горизонтальный": return R.layout.horizontal_widget_layout;
-            case "Расширенный": return R.layout.extended_widget_layout;
-            case "Кислотный": return R.layout.widget_layout_acid;
-            case "Неоновый": return R.layout.widget_layout_neon;
-            default: return R.layout.widget_layout;
-        }
+        // оставляем только базовый стиль
+        return R.layout.widget_layout;
     }
 
     @Override
-    protected void setTexts(RemoteViews views, String hourText, String minuteText, String dayNightText, String dayOfWeekText, String dateText) {
-        // Implementation depends on layout, but for simplicity, assume standard
+    protected void setTexts(RemoteViews views, String hourText, String minuteText, String secondText, String dayNightText, String dayOfWeekText, String dateText) {
         views.setTextViewText(R.id.hour_text, hourText);
-        views.setTextViewText(R.id.day_night_text, dayNightText);
         views.setTextViewText(R.id.minute_text, minuteText);
+        views.setTextViewText(R.id.second_text, secondText);
+        views.setTextViewText(R.id.day_night_text, dayNightText);
+        views.setTextViewText(R.id.day_of_week_text, dayOfWeekText);
+        views.setTextViewText(R.id.date_text, dateText);
     }
 
     @Override

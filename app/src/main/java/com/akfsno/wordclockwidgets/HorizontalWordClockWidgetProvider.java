@@ -12,7 +12,7 @@ public class HorizontalWordClockWidgetProvider extends BaseWordClockWidgetProvid
     }
 
     @Override
-    protected void setTexts(RemoteViews views, String hourText, String minuteText, String dayNightText, String dayOfWeekText, String dateText) {
+    protected void setTexts(RemoteViews views, String hourText, String minuteText, String secondText, String dayNightText, String dayOfWeekText, String dateText) {
         String timeText = hourText + " : " + minuteText.toLowerCase();
         views.setTextViewText(R.id.second_text, timeText);
         views.setTextViewText(R.id.date_text, dateText);

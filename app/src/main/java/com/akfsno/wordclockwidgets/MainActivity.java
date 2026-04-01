@@ -49,29 +49,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        Button updateWidgetsButton = findViewById(R.id.update_widgets_button);
-        updateWidgetsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Update all widgets
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(MainActivity.this);
-                ComponentName[] providers = {
-                    new ComponentName(MainActivity.this, WordClockWidgetProvider.class),
-                    new ComponentName(MainActivity.this, HorizontalWordClockWidgetProvider.class),
-                    new ComponentName(MainActivity.this, ExtendedWordClockWidgetProvider.class),
-                    new ComponentName(MainActivity.this, AcidWordClockWidgetProvider.class),
-                    new ComponentName(MainActivity.this, NeonWordClockWidgetProvider.class)
-                };
-                for (ComponentName provider : providers) {
-                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-                    if (appWidgetIds.length > 0) {
-                        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                        intent.setComponent(provider);
-                        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-                        sendBroadcast(intent);
-                    }
-                }
-            }
-        });
+        // Кнопка обновления убрана по заданию: управление через сохранение/применение внутри конструктора
+
     }
 }

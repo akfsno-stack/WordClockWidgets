@@ -27,46 +27,6 @@ public class WidgetPreferences {
         return prefs.getFloat("fontSize_" + appWidgetId, defaultSize);
     }
 
-    public static void saveBorderColor(Context context, int appWidgetId, int color) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        prefs.edit().putInt("borderColor_" + appWidgetId, color).apply();
-    }
-
-    public static int getBorderColor(Context context, int appWidgetId, int defaultColor) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return prefs.getInt("borderColor_" + appWidgetId, defaultColor);
-    }
-
-    public static void saveBorderWidth(Context context, int appWidgetId, int width) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        prefs.edit().putInt("borderWidth_" + appWidgetId, width).apply();
-    }
-
-    public static int getBorderWidth(Context context, int appWidgetId, int defaultWidth) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return prefs.getInt("borderWidth_" + appWidgetId, defaultWidth);
-    }
-
-    public static void saveBackgroundColor(Context context, int appWidgetId, int color) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        prefs.edit().putInt("backgroundColor_" + appWidgetId, color).apply();
-    }
-
-    public static int getBackgroundColor(Context context, int appWidgetId, int defaultColor) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return prefs.getInt("backgroundColor_" + appWidgetId, defaultColor);
-    }
-
-    public static void saveBackgroundAlpha(Context context, int appWidgetId, int alpha) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        prefs.edit().putInt("backgroundAlpha_" + appWidgetId, alpha).apply();
-    }
-
-    public static int getBackgroundAlpha(Context context, int appWidgetId, int defaultAlpha) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return prefs.getInt("backgroundAlpha_" + appWidgetId, defaultAlpha);
-    }
-
     public static void saveOffsetX(Context context, int appWidgetId, String key, int value) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         prefs.edit().putInt(key + "_offsetX_" + appWidgetId, value).apply();
@@ -117,6 +77,56 @@ public class WidgetPreferences {
         return prefs.getString("style_" + appWidgetId, defaultStyle);
     }
 
+    public static void saveAddZero(Context context, int appWidgetId, boolean addZero) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("addZero_" + appWidgetId, addZero).apply();
+    }
+
+    public static boolean getAddZero(Context context, int appWidgetId, boolean defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean("addZero_" + appWidgetId, defaultValue);
+    }
+
+    public static void saveAddZeroMinute(Context context, int appWidgetId, boolean addZero) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("addZeroMinute_" + appWidgetId, addZero).apply();
+    }
+
+    public static boolean getAddZeroMinute(Context context, int appWidgetId, boolean defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean("addZeroMinute_" + appWidgetId, defaultValue);
+    }
+
+    public static void saveAddZeroSecond(Context context, int appWidgetId, boolean addZero) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("addZeroSecond_" + appWidgetId, addZero).apply();
+    }
+
+    public static boolean getAddZeroSecond(Context context, int appWidgetId, boolean defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean("addZeroSecond_" + appWidgetId, defaultValue);
+    }
+
+    public static void saveShowHour(Context context, int appWidgetId, boolean showHour) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("showHour_" + appWidgetId, showHour).apply();
+    }
+
+    public static boolean getShowHour(Context context, int appWidgetId, boolean defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean("showHour_" + appWidgetId, defaultValue);
+    }
+
+    public static void saveShowMinute(Context context, int appWidgetId, boolean showMinute) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("showMinute_" + appWidgetId, showMinute).apply();
+    }
+
+    public static boolean getShowMinute(Context context, int appWidgetId, boolean defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean("showMinute_" + appWidgetId, defaultValue);
+    }
+
     public static void saveShowSeconds(Context context, int appWidgetId, boolean showSeconds) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         prefs.edit().putBoolean("showSeconds_" + appWidgetId, showSeconds).apply();
@@ -125,6 +135,16 @@ public class WidgetPreferences {
     public static boolean getShowSeconds(Context context, int appWidgetId, boolean defaultValue) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return prefs.getBoolean("showSeconds_" + appWidgetId, defaultValue);
+    }
+
+    public static void saveShowDayNight(Context context, int appWidgetId, boolean showDayNight) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("showDayNight_" + appWidgetId, showDayNight).apply();
+    }
+
+    public static boolean getShowDayNight(Context context, int appWidgetId, boolean defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean("showDayNight_" + appWidgetId, defaultValue);
     }
 
     public static void saveShowDate(Context context, int appWidgetId, boolean showDate) {
@@ -147,14 +167,104 @@ public class WidgetPreferences {
         return prefs.getBoolean("showDayOfWeek_" + appWidgetId, defaultValue);
     }
 
-    public static void saveAddZero(Context context, int appWidgetId, boolean addZero) {
+    public static void saveHourTextColor(Context context, int appWidgetId, int color) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("addZero_" + appWidgetId, addZero).apply();
+        prefs.edit().putInt("hourTextColor_" + appWidgetId, color).apply();
     }
 
-    public static boolean getAddZero(Context context, int appWidgetId, boolean defaultValue) {
+    public static int getHourTextColor(Context context, int appWidgetId, int defaultColor) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return prefs.getBoolean("addZero_" + appWidgetId, defaultValue);
+        return prefs.getInt("hourTextColor_" + appWidgetId, defaultColor);
+    }
+
+    public static void saveMinuteTextColor(Context context, int appWidgetId, int color) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt("minuteTextColor_" + appWidgetId, color).apply();
+    }
+
+    public static int getMinuteTextColor(Context context, int appWidgetId, int defaultColor) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt("minuteTextColor_" + appWidgetId, defaultColor);
+    }
+
+    public static void saveSecondTextColor(Context context, int appWidgetId, int color) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt("secondTextColor_" + appWidgetId, color).apply();
+    }
+
+    public static int getSecondTextColor(Context context, int appWidgetId, int defaultColor) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt("secondTextColor_" + appWidgetId, defaultColor);
+    }
+
+    public static void saveDayNightTextColor(Context context, int appWidgetId, int color) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt("dayNightTextColor_" + appWidgetId, color).apply();
+    }
+
+    public static int getDayNightTextColor(Context context, int appWidgetId, int defaultColor) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt("dayNightTextColor_" + appWidgetId, defaultColor);
+    }
+
+    public static void saveDateTextColor(Context context, int appWidgetId, int color) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt("dateTextColor_" + appWidgetId, color).apply();
+    }
+
+    public static int getDateTextColor(Context context, int appWidgetId, int defaultColor) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt("dateTextColor_" + appWidgetId, defaultColor);
+    }
+
+    public static void saveDayOfWeekTextColor(Context context, int appWidgetId, int color) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt("dayOfWeekTextColor_" + appWidgetId, color).apply();
+    }
+
+    public static int getDayOfWeekTextColor(Context context, int appWidgetId, int defaultColor) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt("dayOfWeekTextColor_" + appWidgetId, defaultColor);
+    }
+
+    public static void saveBorderColor(Context context, int appWidgetId, int color) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt("borderColor_" + appWidgetId, color).apply();
+    }
+
+    public static int getBorderColor(Context context, int appWidgetId, int defaultColor) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt("borderColor_" + appWidgetId, defaultColor);
+    }
+
+    public static void saveBorderWidth(Context context, int appWidgetId, int width) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt("borderWidth_" + appWidgetId, width).apply();
+    }
+
+    public static int getBorderWidth(Context context, int appWidgetId, int defaultWidth) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt("borderWidth_" + appWidgetId, defaultWidth);
+    }
+
+    public static void saveBackgroundColor(Context context, int appWidgetId, int color) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt("backgroundColor_" + appWidgetId, color).apply();
+    }
+
+    public static int getBackgroundColor(Context context, int appWidgetId, int defaultColor) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt("backgroundColor_" + appWidgetId, defaultColor);
+    }
+
+    public static void saveBackgroundAlpha(Context context, int appWidgetId, int alpha) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putInt("backgroundAlpha_" + appWidgetId, alpha).apply();
+    }
+
+    public static int getBackgroundAlpha(Context context, int appWidgetId, int defaultAlpha) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt("backgroundAlpha_" + appWidgetId, defaultAlpha);
     }
 
     public static void saveUse12HourFormat(Context context, int appWidgetId, boolean use12Hour) {

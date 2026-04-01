@@ -12,10 +12,13 @@ public class BlueWordClockWidgetProvider extends BaseWordClockWidgetProvider {
     }
 
     @Override
-    protected void setTexts(RemoteViews views, String hourText, String minuteText, String dayNightText, String dayOfWeekText, String dateText) {
+    protected void setTexts(RemoteViews views, String hourText, String minuteText, String secondText, String dayNightText, String dayOfWeekText, String dateText) {
         views.setTextViewText(R.id.hour_text, hourText);
-        views.setTextViewText(R.id.day_night_text, dayNightText);
         views.setTextViewText(R.id.minute_text, minuteText);
+        views.setTextViewText(R.id.second_text, secondText);
+        views.setTextViewText(R.id.day_night_text, dayNightText);
+        views.setTextViewText(R.id.day_of_week_text, dayOfWeekText);
+        views.setTextViewText(R.id.date_text, dateText);
     }
 
     @Override

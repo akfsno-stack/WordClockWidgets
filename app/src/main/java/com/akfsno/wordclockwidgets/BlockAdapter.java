@@ -1,6 +1,8 @@
 package com.akfsno.wordclockwidgets;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import java.util.List;
 import java.util.Map;
 
@@ -83,16 +86,54 @@ public class BlockAdapter extends BaseExpandableListAdapter {
         TextView label = convertView.findViewById(R.id.child_label);
         SeekBar seekBar = convertView.findViewById(R.id.seek_bar);
         TextView valueText = convertView.findViewById(R.id.value_text);
-        Button resetButton = convertView.findViewById(R.id.reset_button);
+        Button actionButton = convertView.findViewById(R.id.reset_button);
 
         label.setText(child);
-
         String blockKey = getBlockKey(groupPosition);
-        if (child.equals("Размер шрифта")) {
-            seekBar.setMax(50); // 10 to 60
+
+        seekBar.setVisibility(View.VISIBLE);
+        valueText.setVisibility(View.VISIBLE);
+        actionButton.setVisibility(View.VISIBLE);
+
+        if (child.equals("Цвет текста")) {
+            int[] colors = {Color.BLACK, Color.RED, Color.GREEN, Color.BLUE, Color.WHITE};
+            int current = getTextColor(blockKey);
+            int currentIndex = 0;
+            for (int i = 0; i < colors.length; i++) {
+                if (colors[i] == current) {
+                    currentIndex = i;
+                    break;
+                }
+            }
+            seekBar.setMax(colors.length - 1);
+            seekBar.setProgress(currentIndex);
+            valueText.setText("Цвет: " + getColorName(colors[currentIndex]));
+
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    int color = colors[progress];
+                    setTextColor(blockKey, color);
+                    valueText.setText("Цвет: " + getColorName(color));
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+            });
+
+            actionButton.setText("Применить");
+            actionButton.setOnClickListener(v -> updateWidget());
+        } else if (child.equals("Размер шрифта")) {
             float currentSize = getFontSize(blockKey);
+            seekBar.setMax(50);
             seekBar.setProgress((int) (currentSize - 10));
             valueText.setText(String.valueOf((int) currentSize));
+
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -100,79 +141,105 @@ public class BlockAdapter extends BaseExpandableListAdapter {
                     valueText.setText(String.valueOf((int) size));
                     setFontSize(blockKey, size);
                 }
+
                 @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {}
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {}
-            });
-            resetButton.setOnClickListener(v -> {
-                seekBar.setProgress(14); // default 24
-                setFontSize(blockKey, 24f);
-                valueText.setText("24");
-            });
-        } else if (child.equals("Позиция X")) {
-            seekBar.setMax(1000); // -500 to 500
-            int currentX = getOffsetX(blockKey);
-            seekBar.setProgress(currentX + 500);
-            valueText.setText(String.valueOf(currentX));
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    int x = progress - 500;
-                    valueText.setText(String.valueOf(x));
-                    setOffsetX(blockKey, x);
+                public void onStartTrackingTouch(SeekBar seekBar) {
                 }
+
                 @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {}
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {}
-            });
-            resetButton.setOnClickListener(v -> {
-                seekBar.setProgress(500);
-                setOffsetX(blockKey, 0);
-                valueText.setText("0");
-            });
-        } else if (child.equals("Позиция Y")) {
-            seekBar.setMax(1000);
-            int currentY = getOffsetY(blockKey);
-            seekBar.setProgress(currentY + 500);
-            valueText.setText(String.valueOf(currentY));
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    int y = progress - 500;
-                    valueText.setText(String.valueOf(y));
-                    setOffsetY(blockKey, y);
+                public void onStopTrackingTouch(SeekBar seekBar) {
                 }
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {}
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {}
             });
-            resetButton.setOnClickListener(v -> {
-                seekBar.setProgress(500);
-                setOffsetY(blockKey, 0);
-                valueText.setText("0");
+
+            actionButton.setText("Применить");
+            actionButton.setOnClickListener(v -> updateWidget());
+        } else if (child.equals("+ 0 для цифр до 10")) {
+            seekBar.setVisibility(View.GONE);
+            valueText.setText((blockKey.equals("minute") ? WidgetPreferences.getAddZeroMinute(context, appWidgetId, false) : WidgetPreferences.getAddZeroSecond(context, appWidgetId, false)) ? "Включено" : "Отключено");
+            actionButton.setText("Переключить");
+            actionButton.setOnClickListener(v -> {
+                boolean current = blockKey.equals("minute") ? WidgetPreferences.getAddZeroMinute(context, appWidgetId, false) : WidgetPreferences.getAddZeroSecond(context, appWidgetId, false);
+                boolean newValue = !current;
+                if (blockKey.equals("minute")) {
+                    WidgetPreferences.saveAddZeroMinute(context, appWidgetId, newValue);
+                } else {
+                    WidgetPreferences.saveAddZeroSecond(context, appWidgetId, newValue);
+                }
+                valueText.setText(newValue ? "Включено" : "Отключено");
+                updateWidget();
+            });
+        } else if (child.equals("Показать элемент")) {
+            seekBar.setVisibility(View.GONE);
+            boolean showValue;
+            switch (blockKey) {
+                case "hour": showValue = WidgetPreferences.getShowHour(context, appWidgetId, true); break;
+                case "minute": showValue = WidgetPreferences.getShowMinute(context, appWidgetId, true); break;
+                case "second": showValue = WidgetPreferences.getShowSeconds(context, appWidgetId, false); break;
+                case "dayNight": showValue = WidgetPreferences.getShowDayNight(context, appWidgetId, true); break;
+                case "date": showValue = WidgetPreferences.getShowDate(context, appWidgetId, true); break;
+                case "dayOfWeek": showValue = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, true); break;
+                default: showValue = true; break;
+            }
+            valueText.setText(showValue ? "Показать" : "Скрыть");
+            actionButton.setText("Переключить");
+            actionButton.setOnClickListener(v -> {
+                boolean current = blockKey.equals("hour") ? WidgetPreferences.getShowHour(context, appWidgetId, true)
+                        : blockKey.equals("minute") ? WidgetPreferences.getShowMinute(context, appWidgetId, true)
+                        : blockKey.equals("second") ? WidgetPreferences.getShowSeconds(context, appWidgetId, false)
+                        : blockKey.equals("dayNight") ? WidgetPreferences.getShowDayNight(context, appWidgetId, true)
+                        : blockKey.equals("date") ? WidgetPreferences.getShowDate(context, appWidgetId, true)
+                        : WidgetPreferences.getShowDayOfWeek(context, appWidgetId, true);
+                boolean newValue = !current;
+                switch (blockKey) {
+                    case "hour": WidgetPreferences.saveShowHour(context, appWidgetId, newValue); break;
+                    case "minute": WidgetPreferences.saveShowMinute(context, appWidgetId, newValue); break;
+                    case "second": WidgetPreferences.saveShowSeconds(context, appWidgetId, newValue); break;
+                    case "dayNight": WidgetPreferences.saveShowDayNight(context, appWidgetId, newValue); break;
+                    case "date": WidgetPreferences.saveShowDate(context, appWidgetId, newValue); break;
+                    case "dayOfWeek": WidgetPreferences.saveShowDayOfWeek(context, appWidgetId, newValue); break;
+                }
+                valueText.setText(newValue ? "Показать" : "Скрыть");
+                updateWidget();
             });
         } else {
-            // For other items, hide seekbar
             seekBar.setVisibility(View.GONE);
             valueText.setVisibility(View.GONE);
-            resetButton.setVisibility(View.GONE);
+            actionButton.setVisibility(View.GONE);
         }
 
         return convertView;
     }
 
+    private void updateWidget() {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        new WordClockWidgetProvider().onUpdate(context, appWidgetManager, new int[]{appWidgetId});
+    }
+
+    private String getColorName(int color) {
+        if (color == Color.BLACK) return "Чёрный";
+        if (color == Color.WHITE) return "Белый";
+        if (color == Color.RED) return "Красный";
+        if (color == Color.GREEN) return "Зелёный";
+        if (color == Color.BLUE) return "Синий";
+        return "Польз. цвет";
+    }
+
     private String getBlockKey(int groupPosition) {
         switch (groupPosition) {
-            case 0: return "hour";
-            case 1: return "minute";
-            case 2: return "second";
-            case 3: return "dayNight";
-            case 4: return "date";
-            case 5: return "dayOfWeek";
-            default: return "hour";
+            case 0:
+                return "hour";
+            case 1:
+                return "minute";
+            case 2:
+                return "second";
+            case 3:
+                return "dayNight";
+            case 4:
+                return "date";
+            case 5:
+                return "dayOfWeek";
+            default:
+                return "hour";
         }
     }
 
@@ -189,20 +256,27 @@ public class BlockAdapter extends BaseExpandableListAdapter {
         else if (key.equals("second")) WidgetPreferences.saveSecondFontSize(context, appWidgetId, size);
     }
 
-    private int getOffsetX(String key) {
-        return WidgetPreferences.getOffsetX(context, appWidgetId, key, 0);
+    private int getTextColor(String key) {
+        switch (key) {
+            case "hour": return WidgetPreferences.getHourTextColor(context, appWidgetId, Color.BLACK);
+            case "minute": return WidgetPreferences.getMinuteTextColor(context, appWidgetId, Color.BLACK);
+            case "second": return WidgetPreferences.getSecondTextColor(context, appWidgetId, Color.BLACK);
+            case "dayNight": return WidgetPreferences.getDayNightTextColor(context, appWidgetId, Color.RED);
+            case "date": return WidgetPreferences.getDateTextColor(context, appWidgetId, Color.BLACK);
+            case "dayOfWeek": return WidgetPreferences.getDayOfWeekTextColor(context, appWidgetId, Color.BLACK);
+            default: return Color.BLACK;
+        }
     }
 
-    private void setOffsetX(String key, int value) {
-        WidgetPreferences.saveOffsetX(context, appWidgetId, key, value);
-    }
-
-    private int getOffsetY(String key) {
-        return WidgetPreferences.getOffsetY(context, appWidgetId, key, 0);
-    }
-
-    private void setOffsetY(String key, int value) {
-        WidgetPreferences.saveOffsetY(context, appWidgetId, key, value);
+    private void setTextColor(String key, int color) {
+        switch (key) {
+            case "hour": WidgetPreferences.saveHourTextColor(context, appWidgetId, color); break;
+            case "minute": WidgetPreferences.saveMinuteTextColor(context, appWidgetId, color); break;
+            case "second": WidgetPreferences.saveSecondTextColor(context, appWidgetId, color); break;
+            case "dayNight": WidgetPreferences.saveDayNightTextColor(context, appWidgetId, color); break;
+            case "date": WidgetPreferences.saveDateTextColor(context, appWidgetId, color); break;
+            case "dayOfWeek": WidgetPreferences.saveDayOfWeekTextColor(context, appWidgetId, color); break;
+        }
     }
 
     @Override
