@@ -234,24 +234,30 @@ public class WidgetConfigureActivity extends Activity {
 
     private void setupJoystick() {
         View.OnClickListener clickListener = v -> {
-            int dx = 0, dy = 0;
-            if (v == joystickUp) dy = -10;
-            else if (v == joystickDown) dy = 10;
-            else if (v == joystickLeft) dx = -10;
-            else if (v == joystickRight) dx = 10;
-            moveBlock(dx, dy);
+            if (v == joystickUp) moveBlock(0, -10);
+            else if (v == joystickDown) moveBlock(0, 10);
+            else if (v == joystickLeft) moveBlock(-10, 0);
+            else if (v == joystickRight) moveBlock(10, 0);
         };
 
         View.OnLongClickListener longClickListener = v -> {
-            int dx = 0, dy = 0;
-            if (v == joystickUp) dy = -5;
-            else if (v == joystickDown) dy = 5;
-            else if (v == joystickLeft) dx = -5;
-            else if (v == joystickRight) dx = 5;
-            moveRunnable = () -> {
-                moveBlock(dx, dy);
-                handler.postDelayed(moveRunnable, 100);
+            int deltaX = 0, deltaY = 0;
+            if (v == joystickUp) deltaY = -5;
+            else if (v == joystickDown) deltaY = 5;
+            else if (v == joystickLeft) deltaX = -5;
+            else if (v == joystickRight) deltaX = 5;
+
+            final int fx = deltaX;
+            final int fy = deltaY;
+
+            moveRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    moveBlock(fx, fy);
+                    handler.postDelayed(this, 100);
+                }
             };
+
             handler.post(moveRunnable);
             return true;
         };

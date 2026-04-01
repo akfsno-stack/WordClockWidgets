@@ -76,10 +76,10 @@
             android:name=".ConstructorActivity"
             android:exported="true"
             android:theme="@style/AppTheme" />
-        
-        <uses-permission 
-            android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     </application>
+
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
 </manifest>
