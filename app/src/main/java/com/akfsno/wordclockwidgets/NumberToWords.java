@@ -73,8 +73,12 @@ public class NumberToWords {
     }
 
     public static String convertMinute(int minute, boolean addZero) {
+        return convertMinute(minute, addZero, false);
+    }
+
+    public static String convertMinute(int minute, boolean addZero, boolean use12Hour) {
         if (minute == 0) {
-            return "ноль";
+            return use12Hour ? "ровно" : "ноль-ноль";
         }
         if (addZero && minute >= 1 && minute <= 9) {
             return "ноль " + convert(minute);

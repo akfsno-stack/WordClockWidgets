@@ -112,10 +112,10 @@ public class WidgetConfigureActivity extends Activity {
 
         if (widgetProviderClass.endsWith("SmallWordClockWidgetProvider")) {
             widthDp = 146; // 2x1
-        } else if (widgetProviderClass.endsWith("WordClockWidgetProvider")) {
-            widthDp = 216; // 3x1
         } else if (widgetProviderClass.endsWith("LargeWordClockWidgetProvider")) {
             widthDp = 288; // 4x1
+        } else if (widgetProviderClass.endsWith("WordClockWidgetProvider")) {
+            widthDp = 216; // 3x1
         }
 
         int newWidth = dpToPx(widthDp);
@@ -167,7 +167,6 @@ public class WidgetConfigureActivity extends Activity {
         blockList.setAdapter(adapter);
 
         blockList.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
-            saveOffsets();
             selectedBlock = getBlockKey(groupPosition);
             updateCoordinates();
             updatePreviewText();
@@ -448,7 +447,7 @@ public class WidgetConfigureActivity extends Activity {
         boolean showDayOfWeek = WidgetPreferences.getShowDayOfWeek(this, appWidgetId, false);
 
         String hourText = use12 ? NumberToWords.convertHour(hour24) : NumberToWords.convertHour24(hour24);
-        String minuteText = NumberToWords.convertMinute(calendar.get(Calendar.MINUTE), WidgetPreferences.getAddZeroMinute(this, appWidgetId, false));
+        String minuteText = NumberToWords.convertMinute(calendar.get(Calendar.MINUTE), WidgetPreferences.getAddZeroMinute(this, appWidgetId, false), use12);
 
         if (!use12 && hour24 == 0 && calendar.get(Calendar.MINUTE) == 0) {
             hourText = "двенадцать";
@@ -594,6 +593,8 @@ public class WidgetConfigureActivity extends Activity {
     }
 
     private void saveOffsets() {
+        WidgetPreferences.saveUseConstructorLayout(this, appWidgetId, true);
+
         WidgetPreferences.saveOffsetX(this, appWidgetId, "hour", blockOffsets.get("hour")[0]);
         WidgetPreferences.saveOffsetY(this, appWidgetId, "hour", blockOffsets.get("hour")[1]);
         WidgetPreferences.saveOffsetX(this, appWidgetId, "minute", blockOffsets.get("minute")[0]);
@@ -611,7 +612,12 @@ public class WidgetConfigureActivity extends Activity {
     }
 
     private void updateWidget() {
-        Intent intent = new Intent(this, WordClockWidgetProvider.class);
+        Intent intent = new Intent();
+        try {
+            intent.setComponent(new android.content.ComponentName(this, widgetProviderClass));
+        } catch (Exception e) {
+            intent.setComponent(new android.content.ComponentName(this, WordClockWidgetProvider.class));
+        }
         intent.setAction(BaseWordClockWidgetProvider.UPDATE_ACTION);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         sendBroadcast(intent);

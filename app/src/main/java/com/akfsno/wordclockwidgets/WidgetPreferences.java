@@ -237,6 +237,16 @@ public class WidgetPreferences {
         return prefs.getInt("backgroundAlpha_" + appWidgetId, defaultAlpha);
     }
 
+    public static void saveUseConstructorLayout(Context context, int appWidgetId, boolean useConstructor) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("useConstructorLayout_" + appWidgetId, useConstructor).apply();
+    }
+
+    public static boolean getUseConstructorLayout(Context context, int appWidgetId, boolean defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean("useConstructorLayout_" + appWidgetId, defaultValue);
+    }
+
     public static void saveUse12HourFormat(Context context, int appWidgetId, boolean use12Hour) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         prefs.edit().putBoolean("use12HourFormat_" + appWidgetId, use12Hour).apply();

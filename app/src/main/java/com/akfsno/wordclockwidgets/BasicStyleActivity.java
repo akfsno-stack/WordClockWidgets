@@ -20,6 +20,7 @@ import java.util.Calendar;
 public class BasicStyleActivity extends Activity {
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private String widgetProviderClass = WordClockWidgetProvider.class.getName();
     private TextView previewHour, previewMinute, previewDayNight;
 
     @Override
@@ -36,6 +37,14 @@ public class BasicStyleActivity extends Activity {
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
             return;
+        }
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        if (appWidgetManager != null) {
+            android.appwidget.AppWidgetProviderInfo info = appWidgetManager.getAppWidgetInfo(appWidgetId);
+            if (info != null && info.provider != null) {
+                widgetProviderClass = info.provider.getClassName();
+            }
         }
 
         // Initialize preview views
@@ -341,7 +350,7 @@ public class BasicStyleActivity extends Activity {
         boolean use12 = WidgetPreferences.getUse12HourFormat(this, appWidgetId, true);
 
         String hourText = use12 ? NumberToWords.convertHour(hour24) : NumberToWords.convertHour24(hour24);
-        String minuteText = NumberToWords.convertMinute(calendar.get(Calendar.MINUTE), WidgetPreferences.getAddZeroMinute(this, appWidgetId, false));
+        String minuteText = NumberToWords.convertMinute(calendar.get(Calendar.MINUTE), WidgetPreferences.getAddZeroMinute(this, appWidgetId, false), use12);
 
         if (!use12 && hour24 == 0 && calendar.get(Calendar.MINUTE) == 0) {
             hourText = "двенадцать";
@@ -368,11 +377,20 @@ public class BasicStyleActivity extends Activity {
     }
 
     private void updateWidget() {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        new WordClockWidgetProvider().onUpdate(this, appWidgetManager, new int[]{appWidgetId});
+        Intent intent = new Intent();
+        try {
+            intent.setComponent(new android.content.ComponentName(this, widgetProviderClass));
+        } catch (Exception e) {
+            intent.setComponent(new android.content.ComponentName(this, WordClockWidgetProvider.class));
+        }
+        intent.setAction(BaseWordClockWidgetProvider.UPDATE_ACTION);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        sendBroadcast(intent);
     }
 
     private void saveAndFinish() {
+        WidgetPreferences.saveUseConstructorLayout(this, appWidgetId, false);
+
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         setResult(RESULT_OK, resultValue);

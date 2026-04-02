@@ -79,7 +79,7 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         boolean addZeroMinute = WidgetPreferences.getAddZeroMinute(context, appWidgetId, false);
 
         String hourText = use12Hour ? NumberToWords.convertHour(hour24) : NumberToWords.convertHour24(hour24);
-        String minuteText = NumberToWords.convertMinute(calendar.get(Calendar.MINUTE), addZeroMinute);
+        String minuteText = NumberToWords.convertMinute(calendar.get(Calendar.MINUTE), addZeroMinute, use12Hour);
 
         if (!use12Hour && hour24 == 0 && calendar.get(Calendar.MINUTE) == 0) {
             hourText = "двенадцать";
@@ -92,24 +92,36 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         setTexts(views, hourText, minuteText, dayNightText, dayOfWeekText, dateText);
 
         // Apply offsets using margin simulation on wrapper elements
-        int hourDx = WidgetPreferences.constrainOffset(WidgetPreferences.getOffsetX(context, appWidgetId, "hour", 0));
-        int hourDy = WidgetPreferences.constrainOffset(WidgetPreferences.getOffsetY(context, appWidgetId, "hour", 0));
+        boolean useConstructorLayout = WidgetPreferences.getUseConstructorLayout(context, appWidgetId, false);
+
+        int hourDx = 0;
+        int hourDy = 0;
+        int minuteDx = 0;
+        int minuteDy = 0;
+        int dayNightDx = 0;
+        int dayNightDy = 0;
+        int dateDx = 0;
+        int dateDy = 0;
+        int dayOfWeekDx = 0;
+        int dayOfWeekDy = 0;
+
+        if (useConstructorLayout) {
+            hourDx = WidgetPreferences.constrainOffset(WidgetPreferences.getOffsetX(context, appWidgetId, "hour", 0));
+            hourDy = WidgetPreferences.constrainOffset(WidgetPreferences.getOffsetY(context, appWidgetId, "hour", 0));
+            minuteDx = WidgetPreferences.constrainOffset(WidgetPreferences.getOffsetX(context, appWidgetId, "minute", 0));
+            minuteDy = WidgetPreferences.constrainOffset(WidgetPreferences.getOffsetY(context, appWidgetId, "minute", 0));
+            dayNightDx = WidgetPreferences.constrainOffset(WidgetPreferences.getDayNightOffsetX(context, appWidgetId, 0));
+            dayNightDy = WidgetPreferences.constrainOffset(WidgetPreferences.getDayNightOffsetY(context, appWidgetId, 0));
+            dateDx = WidgetPreferences.constrainOffset(WidgetPreferences.getDateOffsetX(context, appWidgetId, 0));
+            dateDy = WidgetPreferences.constrainOffset(WidgetPreferences.getDateOffsetY(context, appWidgetId, 0));
+            dayOfWeekDx = WidgetPreferences.constrainOffset(WidgetPreferences.getDayOfWeekOffsetX(context, appWidgetId, 0));
+            dayOfWeekDy = WidgetPreferences.constrainOffset(WidgetPreferences.getDayOfWeekOffsetY(context, appWidgetId, 0));
+        }
+
         applyPaddingToWrapper(views, R.id.hour_wrapper, hourDx, hourDy);
-
-        int minuteDx = WidgetPreferences.constrainOffset(WidgetPreferences.getOffsetX(context, appWidgetId, "minute", 0));
-        int minuteDy = WidgetPreferences.constrainOffset(WidgetPreferences.getOffsetY(context, appWidgetId, "minute", 0));
         applyPaddingToWrapper(views, R.id.minute_wrapper, minuteDx, minuteDy);
-
-        int dayNightDx = WidgetPreferences.constrainOffset(WidgetPreferences.getDayNightOffsetX(context, appWidgetId, 0));
-        int dayNightDy = WidgetPreferences.constrainOffset(WidgetPreferences.getDayNightOffsetY(context, appWidgetId, 0));
         applyPaddingToWrapper(views, R.id.day_night_wrapper, dayNightDx, dayNightDy);
-
-        int dateDx = WidgetPreferences.constrainOffset(WidgetPreferences.getDateOffsetX(context, appWidgetId, 0));
-        int dateDy = WidgetPreferences.constrainOffset(WidgetPreferences.getDateOffsetY(context, appWidgetId, 0));
         applyPaddingToWrapper(views, R.id.date_wrapper, dateDx, dateDy);
-
-        int dayOfWeekDx = WidgetPreferences.constrainOffset(WidgetPreferences.getDayOfWeekOffsetX(context, appWidgetId, 0));
-        int dayOfWeekDy = WidgetPreferences.constrainOffset(WidgetPreferences.getDayOfWeekOffsetY(context, appWidgetId, 0));
         applyPaddingToWrapper(views, R.id.day_of_week_wrapper, dayOfWeekDx, dayOfWeekDy);
 
         int hourColor = WidgetPreferences.getHourTextColor(context, appWidgetId, getDefaultTextColor());
