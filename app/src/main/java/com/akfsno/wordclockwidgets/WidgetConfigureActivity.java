@@ -57,6 +57,7 @@ public class WidgetConfigureActivity extends Activity {
     private Map<String, int[]> blockOffsets = new HashMap<>();
     private int currentBackgroundColor = 0xFFFFFFFF;
     private int currentBorderColor = 0xFF000000;
+    private boolean previewInitialized = false;
 
     @Override
     protected void onPause() {
@@ -88,7 +89,17 @@ public class WidgetConfigureActivity extends Activity {
         setPreviewContainerByProvider();
         setupBlockList();
         loadOffsets();
-        updatePreview();
+        // Delay updatePreview until view is laid out and getWidth/getHeight work properly
+        previewContainer.getViewTreeObserver().addOnGlobalLayoutListener(new android.view.ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (!previewInitialized) {
+                    previewInitialized = true;
+                    previewContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    updatePreview();
+                }
+            }
+        });
         setupDragAndDrop();
         setupJoystick();
         startPreviewUpdater();
