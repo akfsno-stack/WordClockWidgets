@@ -169,16 +169,5 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         long secondsToNextMinute = 60 - (currentSeconds % 60);
         long nextUpdateMillis = currentMillis + secondsToNextMinute * 1000;
         alarmManager.setRepeating(AlarmManager.RTC, nextUpdateMillis, 60000, alarmPendingIntent);
-    }        Intent updateIntent = new Intent(context, this.getClass());
-        updateIntent.setAction(UPDATE_ACTION);
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, appWidgetId, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        long currentMillis = System.currentTimeMillis();
-        long currentSeconds = currentMillis / 1000;
-        long secondsToNextMinute = 60 - (currentSeconds % 60);
-        long nextUpdateMillis = currentMillis + secondsToNextMinute * 1000;
-        alarmManager.setRepeating(AlarmManager.RTC, nextUpdateMillis, 60000, alarmPendingIntent);
-
-        // force new update for the next minute
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_container);
     }
 }
