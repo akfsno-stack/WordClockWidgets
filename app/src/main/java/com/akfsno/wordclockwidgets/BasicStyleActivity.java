@@ -429,7 +429,7 @@ public class BasicStyleActivity extends Activity {
 
     private float getPreviewContainerAvailableHeightPx() {
         View container = findViewById(R.id.preview_container);
-        int heightPx = (container != null && container.getHeight() > 0) ? container.getHeight() : dpToPx(140);
+        int heightPx = (container != null && container.getHeight() > 0) ? container.getHeight() : dpToPx(150);
         // subtract padding from BasicStyleActivity template, if any
         int padding = container != null ? container.getPaddingTop() + container.getPaddingBottom() : dpToPx(16);
         return Math.max(0, heightPx - padding - dpToPx(16));
