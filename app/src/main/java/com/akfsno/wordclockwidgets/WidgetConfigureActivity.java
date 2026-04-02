@@ -25,10 +25,13 @@ import java.util.Map;
 
 public class WidgetConfigureActivity extends Activity {
 
-    private static final float PREVIEW_SCALE = 2f;
-    private static final int WIDGET_CELLS_WIDTH = 3;
-    private static final int WIDGET_CELLS_HEIGHT = 1;
-    private static final int CELL_DP = 72;
+    private static final int REAL_WIDGET_DP_WIDTH = 216;
+    private static final int REAL_WIDGET_DP_HEIGHT = 72;
+    private static final int CONSTRUCTOR_PREVIEW_DP_WIDTH = 360;
+    private static final int CONSTRUCTOR_PREVIEW_DP_HEIGHT = 180;
+
+    private int previewPixelWidth;
+    private int previewPixelHeight;
 
     private int appWidgetId;
     private ExpandableListView blockList;
@@ -114,9 +117,12 @@ public class WidgetConfigureActivity extends Activity {
 
         android.util.DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
-        int requiredWidthPx = dpToPx(432); // 6 cells in dp
+        int requiredWidthPx = dpToPx(CONSTRUCTOR_PREVIEW_DP_WIDTH);
         int previewWidthPx = Math.min(screenWidth, requiredWidthPx);
-        int previewHeightPx = dpToPx(144); // 2 cells in dp
+        int previewHeightPx = dpToPx(CONSTRUCTOR_PREVIEW_DP_HEIGHT);
+
+        previewPixelWidth = previewWidthPx;
+        previewPixelHeight = previewHeightPx;
 
         ViewGroup.LayoutParams params = previewContainer.getLayoutParams();
         if (params != null) {
@@ -192,20 +198,20 @@ public class WidgetConfigureActivity extends Activity {
 
     private void loadOffsets() {
         blockOffsets.put("hour", new int[]{
-                Math.round(WidgetPreferences.getOffsetX(this, appWidgetId, "hour", 0) * PREVIEW_SCALE),
-                Math.round(WidgetPreferences.getOffsetY(this, appWidgetId, "hour", 0) * PREVIEW_SCALE)});
+                widgetToPreviewX(WidgetPreferences.getOffsetX(this, appWidgetId, "hour", 0)),
+                widgetToPreviewY(WidgetPreferences.getOffsetY(this, appWidgetId, "hour", 0))});
         blockOffsets.put("minute", new int[]{
-                Math.round(WidgetPreferences.getOffsetX(this, appWidgetId, "minute", 0) * PREVIEW_SCALE),
-                Math.round(WidgetPreferences.getOffsetY(this, appWidgetId, "minute", 0) * PREVIEW_SCALE)});
+                widgetToPreviewX(WidgetPreferences.getOffsetX(this, appWidgetId, "minute", 0)),
+                widgetToPreviewY(WidgetPreferences.getOffsetY(this, appWidgetId, "minute", 0))});
         blockOffsets.put("dayNight", new int[]{
-                Math.round(WidgetPreferences.getDayNightOffsetX(this, appWidgetId, 0) * PREVIEW_SCALE),
-                Math.round(WidgetPreferences.getDayNightOffsetY(this, appWidgetId, 0) * PREVIEW_SCALE)});
+                widgetToPreviewX(WidgetPreferences.getDayNightOffsetX(this, appWidgetId, 0)),
+                widgetToPreviewY(WidgetPreferences.getDayNightOffsetY(this, appWidgetId, 0))});
         blockOffsets.put("date", new int[]{
-                Math.round(WidgetPreferences.getDateOffsetX(this, appWidgetId, 0) * PREVIEW_SCALE),
-                Math.round(WidgetPreferences.getDateOffsetY(this, appWidgetId, 0) * PREVIEW_SCALE)});
+                widgetToPreviewX(WidgetPreferences.getDateOffsetX(this, appWidgetId, 0)),
+                widgetToPreviewY(WidgetPreferences.getDateOffsetY(this, appWidgetId, 0))});
         blockOffsets.put("dayOfWeek", new int[]{
-                Math.round(WidgetPreferences.getDayOfWeekOffsetX(this, appWidgetId, 0) * PREVIEW_SCALE),
-                Math.round(WidgetPreferences.getDayOfWeekOffsetY(this, appWidgetId, 0) * PREVIEW_SCALE)});
+                widgetToPreviewX(WidgetPreferences.getDayOfWeekOffsetX(this, appWidgetId, 0)),
+                widgetToPreviewY(WidgetPreferences.getDayOfWeekOffsetY(this, appWidgetId, 0))});
     }
 
     private void updatePreview() {
@@ -236,8 +242,8 @@ public class WidgetConfigureActivity extends Activity {
 
     private int[] constrainOffsetToPreview(View view, int x, int y) {
         if (previewContainer == null || view == null) {
-            int maxPreview = Math.round(WidgetPreferences.getMaxOffset() * PREVIEW_SCALE);
-            int minPreview = Math.round(WidgetPreferences.getMinOffset() * PREVIEW_SCALE);
+            int maxPreview = WidgetPreferences.getMaxOffset();
+            int minPreview = WidgetPreferences.getMinOffset();
             int boundedX = Math.max(minPreview, Math.min(maxPreview, x));
             int boundedY = Math.max(minPreview, Math.min(maxPreview, y));
             return new int[]{boundedX, boundedY};
@@ -266,6 +272,44 @@ public class WidgetConfigureActivity extends Activity {
         int boundedY = Math.max(minY, Math.min(maxY, y));
 
         return new int[]{boundedX, boundedY};
+    }
+
+    private float getScaleX() {
+        if (previewPixelWidth <= 0) return 1f;
+        return (float) dpToPx(REAL_WIDGET_DP_WIDTH) / previewPixelWidth;
+    }
+
+    private float getScaleY() {
+        if (previewPixelHeight <= 0) return 1f;
+        return (float) dpToPx(REAL_WIDGET_DP_HEIGHT) / previewPixelHeight;
+    }
+
+    private int previewToWidgetX(int previewX) {
+        float previewLeft = previewPixelWidth / 2f + previewX;
+        float widgetLeft = previewLeft * getScaleX();
+        float widgetCenter = widgetLeft - dpToPx(REAL_WIDGET_DP_WIDTH) / 2f;
+        return Math.round(widgetCenter);
+    }
+
+    private int previewToWidgetY(int previewY) {
+        float previewTop = previewPixelHeight / 2f + previewY;
+        float widgetTop = previewTop * getScaleY();
+        float widgetCenter = widgetTop - dpToPx(REAL_WIDGET_DP_HEIGHT) / 2f;
+        return Math.round(widgetCenter);
+    }
+
+    private int widgetToPreviewX(int widgetX) {
+        float widgetLeft = dpToPx(REAL_WIDGET_DP_WIDTH) / 2f + widgetX;
+        float previewLeft = widgetLeft / getScaleX();
+        float previewCenter = previewLeft - previewPixelWidth / 2f;
+        return Math.round(previewCenter);
+    }
+
+    private int widgetToPreviewY(int widgetY) {
+        float widgetTop = dpToPx(REAL_WIDGET_DP_HEIGHT) / 2f + widgetY;
+        float previewTop = widgetTop / getScaleY();
+        float previewCenter = previewTop - previewPixelHeight / 2f;
+        return Math.round(previewCenter);
     }
 
     private void setupDragAndDrop() {
@@ -373,8 +417,8 @@ public class WidgetConfigureActivity extends Activity {
 
     private void updateCoordinates() {
         int[] off = blockOffsets.get(selectedBlock);
-        int realX = Math.round(off[0] / PREVIEW_SCALE);
-        int realY = Math.round(off[1] / PREVIEW_SCALE);
+        int realX = previewToWidgetX(off[0]);
+        int realY = previewToWidgetY(off[1]);
         coordinates.setText("(preview: " + off[0] + "," + off[1] + ", widget: " + realX + "," + realY + ")");
     }
 
@@ -614,16 +658,16 @@ public class WidgetConfigureActivity extends Activity {
     private void saveOffsets() {
         WidgetPreferences.saveUseConstructorLayout(this, appWidgetId, true);
 
-        WidgetPreferences.saveOffsetX(this, appWidgetId, "hour", Math.round(blockOffsets.get("hour")[0] / PREVIEW_SCALE));
-        WidgetPreferences.saveOffsetY(this, appWidgetId, "hour", Math.round(blockOffsets.get("hour")[1] / PREVIEW_SCALE));
-        WidgetPreferences.saveOffsetX(this, appWidgetId, "minute", Math.round(blockOffsets.get("minute")[0] / PREVIEW_SCALE));
-        WidgetPreferences.saveOffsetY(this, appWidgetId, "minute", Math.round(blockOffsets.get("minute")[1] / PREVIEW_SCALE));
-        WidgetPreferences.saveDayNightOffsetX(this, appWidgetId, Math.round(blockOffsets.get("dayNight")[0] / PREVIEW_SCALE));
-        WidgetPreferences.saveDayNightOffsetY(this, appWidgetId, Math.round(blockOffsets.get("dayNight")[1] / PREVIEW_SCALE));
-        WidgetPreferences.saveDateOffsetX(this, appWidgetId, Math.round(blockOffsets.get("date")[0] / PREVIEW_SCALE));
-        WidgetPreferences.saveDateOffsetY(this, appWidgetId, Math.round(blockOffsets.get("date")[1] / PREVIEW_SCALE));
-        WidgetPreferences.saveDayOfWeekOffsetX(this, appWidgetId, Math.round(blockOffsets.get("dayOfWeek")[0] / PREVIEW_SCALE));
-        WidgetPreferences.saveDayOfWeekOffsetY(this, appWidgetId, Math.round(blockOffsets.get("dayOfWeek")[1] / PREVIEW_SCALE));
+        WidgetPreferences.saveOffsetX(this, appWidgetId, "hour", previewToWidgetX(blockOffsets.get("hour")[0]));
+        WidgetPreferences.saveOffsetY(this, appWidgetId, "hour", previewToWidgetY(blockOffsets.get("hour")[1]));
+        WidgetPreferences.saveOffsetX(this, appWidgetId, "minute", previewToWidgetX(blockOffsets.get("minute")[0]));
+        WidgetPreferences.saveOffsetY(this, appWidgetId, "minute", previewToWidgetY(blockOffsets.get("minute")[1]));
+        WidgetPreferences.saveDayNightOffsetX(this, appWidgetId, previewToWidgetX(blockOffsets.get("dayNight")[0]));
+        WidgetPreferences.saveDayNightOffsetY(this, appWidgetId, previewToWidgetY(blockOffsets.get("dayNight")[1]));
+        WidgetPreferences.saveDateOffsetX(this, appWidgetId, previewToWidgetX(blockOffsets.get("date")[0]));
+        WidgetPreferences.saveDateOffsetY(this, appWidgetId, previewToWidgetY(blockOffsets.get("date")[1]));
+        WidgetPreferences.saveDayOfWeekOffsetX(this, appWidgetId, previewToWidgetX(blockOffsets.get("dayOfWeek")[0]));
+        WidgetPreferences.saveDayOfWeekOffsetY(this, appWidgetId, previewToWidgetY(blockOffsets.get("dayOfWeek")[1]));
 
         updateWidget();
 
