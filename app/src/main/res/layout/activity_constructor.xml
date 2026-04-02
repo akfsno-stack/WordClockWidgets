@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/title"
@@ -16,10 +17,11 @@
         android:layout_marginBottom="16dp" />
 
     <FrameLayout
-        android:id="@+id/preview_container"
+        android:id="@+id/widget_preview_container"
         android:layout_width="300dp"
         android:layout_height="150dp"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/widget_border">
 
         <include layout="@layout/widget_layout" />
 

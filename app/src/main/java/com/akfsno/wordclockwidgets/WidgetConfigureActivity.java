@@ -90,16 +90,21 @@ public class WidgetConfigureActivity extends Activity {
         setupBlockList();
         loadOffsets();
         // Delay updatePreview until view is laid out and getWidth/getHeight work properly
-        previewContainer.getViewTreeObserver().addOnGlobalLayoutListener(new android.view.ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (!previewInitialized) {
-                    previewInitialized = true;
-                    previewContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    updatePreview();
+        if (previewContainer != null) {
+            previewContainer.getViewTreeObserver().addOnGlobalLayoutListener(new android.view.ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (!previewInitialized) {
+                        previewInitialized = true;
+                        previewContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        updatePreview();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            Log.w("WidgetConfigureActivity", "previewContainer is null in onCreate, calling updatePreview directly");
+            updatePreview();
+        }
         setupDragAndDrop();
         setupJoystick();
         startPreviewUpdater();
