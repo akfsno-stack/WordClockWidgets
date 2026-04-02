@@ -257,7 +257,8 @@ public class BlockAdapter extends BaseExpandableListAdapter {
             valueText.setText(use12 ? "12-часовой" : "24-часовой");
             actionButton.setText("Переключить");
             actionButton.setOnClickListener(v -> {
-                boolean newValue = !use12;
+                boolean current = WidgetPreferences.getUse12HourFormat(context, appWidgetId, true);
+                boolean newValue = !current;
                 WidgetPreferences.saveUse12HourFormat(context, appWidgetId, newValue);
                 valueText.setText(newValue ? "12-часовой" : "24-часовой");
                 updateWidget();

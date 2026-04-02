@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
@@ -37,6 +38,7 @@ public class WidgetConfigureActivity extends Activity {
     private Runnable previewUpdateRunnable;
 
     private String selectedBlock = "hour";
+    private String widgetProviderClass = "";
     private Map<String, int[]> blockOffsets = new HashMap<>();
     private int currentBackgroundColor = 0xFFFFFFFF;
     private int currentBorderColor = 0xFF000000;
@@ -58,7 +60,16 @@ public class WidgetConfigureActivity extends Activity {
             return;
         }
 
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        if (appWidgetManager != null) {
+            android.appwidget.AppWidgetProviderInfo info = appWidgetManager.getAppWidgetInfo(appWidgetId);
+            if (info != null && info.provider != null) {
+                widgetProviderClass = info.provider.getClassName();
+            }
+        }
+
         initializeViews();
+        setPreviewContainerByProvider();
         setupBlockList();
         loadOffsets();
         updatePreview();
@@ -89,6 +100,35 @@ public class WidgetConfigureActivity extends Activity {
         saveButton = findViewById(R.id.save_button);
         applyButton = findViewById(R.id.apply_button);
         resetAllButton = findViewById(R.id.reset_all_button);
+    }
+
+    private void setPreviewContainerByProvider() {
+        if (previewContainer == null) return;
+
+        int widthDp = 330; // default for 3x1
+        int heightDp = 72;
+
+        if (widgetProviderClass.endsWith("SmallWordClockWidgetProvider")) {
+            widthDp = 220; // 2x1
+        } else if (widgetProviderClass.endsWith("WordClockWidgetProvider")) {
+            widthDp = 330; // 3x1
+        } else if (widgetProviderClass.endsWith("LargeWordClockWidgetProvider")) {
+            widthDp = 440; // 4x1
+        }
+
+        int newWidth = dpToPx(widthDp);
+        int newHeight = dpToPx(heightDp);
+
+        ViewGroup.LayoutParams params = previewContainer.getLayoutParams();
+        if (params != null) {
+            params.width = newWidth;
+            params.height = newHeight;
+            previewContainer.setLayoutParams(params);
+        }
+    }
+
+    private int dpToPx(int dp) {
+        return (int) (dp * getResources().getDisplayMetrics().density + 0.5f);
     }
 
     private void setupBlockList() {
