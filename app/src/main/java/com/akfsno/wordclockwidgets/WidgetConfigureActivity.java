@@ -147,8 +147,8 @@ public class WidgetConfigureActivity extends Activity {
         int screenWidth = displayMetrics.widthPixels;
         
         // Calculate exact 6x2 grid dimensions with borders
-        int cellWidthPx = dpToPx(REAL_WIDGET_DP_WIDTH) / GRID_COLUMNS;  // Each cell is real_widget_width / 6
-        int cellHeightPx = dpToPx(REAL_WIDGET_DP_HEIGHT) / GRID_ROWS;   // Each cell is real_widget_height / 2
+        int cellWidthPx = dpToPx(CONSTRUCTOR_PREVIEW_DP_WIDTH) / GRID_COLUMNS;  // Each cell is constructor_preview_width / 6
+        int cellHeightPx = dpToPx(CONSTRUCTOR_PREVIEW_DP_HEIGHT) / GRID_ROWS;   // Each cell is constructor_preview_height / 2
         
         int previewWidthPx = cellWidthPx * GRID_COLUMNS;   // 6 cells wide
         int previewHeightPx = cellHeightPx * GRID_ROWS;    // 2 cells high
@@ -448,12 +448,12 @@ public class WidgetConfigureActivity extends Activity {
 
     private float getScaleX() {
         if (previewPixelWidth <= 0) return 1f;
-        return (float) dpToPx(REAL_WIDGET_DP_WIDTH) / previewPixelWidth;
+        return (float) dpToPx(REAL_WIDGET_DP_WIDTH) / dpToPx(CONSTRUCTOR_PREVIEW_DP_WIDTH);
     }
 
     private float getScaleY() {
         if (previewPixelHeight <= 0) return 1f;
-        return (float) dpToPx(REAL_WIDGET_DP_HEIGHT) / previewPixelHeight;
+        return (float) dpToPx(REAL_WIDGET_DP_HEIGHT) / dpToPx(CONSTRUCTOR_PREVIEW_DP_HEIGHT);
     }
 
     private int previewToWidgetX(int previewX) {
