@@ -71,8 +71,8 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         boolean showHour = WidgetPreferences.getShowHour(context, appWidgetId, true);
         boolean showMinute = WidgetPreferences.getShowMinute(context, appWidgetId, true);
         boolean showDayNight = WidgetPreferences.getShowDayNight(context, appWidgetId, true);
-        boolean showDate = WidgetPreferences.getShowDate(context, appWidgetId, false);
-        boolean showDayOfWeek = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, false);
+        boolean showDate = WidgetPreferences.getShowDate(context, appWidgetId, true);
+        boolean showDayOfWeek = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, true);
 
         boolean addZeroMinute = WidgetPreferences.getAddZeroMinute(context, appWidgetId, false);
 
@@ -124,30 +124,11 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         }
         minuteDy += 40;
 
-        // Date and day-of-week base position should be center (not shifted off-screen) unless explicitly set by constructor.
-        if (!useConstructor) {
-            dateDx = 0;
-            dateDy = 0;
-            dayOfWeekDx = 0;
-            dayOfWeekDy = 0;
-        }
-
-        hourDx = WidgetPreferences.constrainOffset(hourDx);
-        hourDy = WidgetPreferences.constrainOffset(hourDy);
-        minuteDx = WidgetPreferences.constrainOffset(minuteDx);
-        minuteDy = WidgetPreferences.constrainOffset(minuteDy);
-        dayNightDx = WidgetPreferences.constrainOffset(dayNightDx);
-        dayNightDy = WidgetPreferences.constrainOffset(dayNightDy);
-        dateDx = WidgetPreferences.constrainOffset(dateDx);
-        dateDy = WidgetPreferences.constrainOffset(dateDy);
-        dayOfWeekDx = WidgetPreferences.constrainOffset(dayOfWeekDx);
-        dayOfWeekDy = WidgetPreferences.constrainOffset(dayOfWeekDy);
-
-        applyPaddingToWrapper(views, R.id.hour_wrapper, hourDx, hourDy);
-        applyPaddingToWrapper(views, R.id.minute_wrapper, minuteDx, minuteDy);
-        applyPaddingToWrapper(views, R.id.day_night_wrapper, dayNightDx, dayNightDy);
-        applyPaddingToWrapper(views, R.id.date_wrapper, dateDx, dateDy);
-        applyPaddingToWrapper(views, R.id.day_of_week_wrapper, dayOfWeekDx, dayOfWeekDy);
+        applyTranslationToWrapper(views, R.id.hour_wrapper, hourDx, hourDy);
+        applyTranslationToWrapper(views, R.id.minute_wrapper, minuteDx, minuteDy);
+        applyTranslationToWrapper(views, R.id.day_night_wrapper, dayNightDx, dayNightDy);
+        applyTranslationToWrapper(views, R.id.date_wrapper, dateDx, dateDy);
+        applyTranslationToWrapper(views, R.id.day_of_week_wrapper, dayOfWeekDx, dayOfWeekDy);
 
         int hourColor = WidgetPreferences.getHourTextColor(context, appWidgetId, getDefaultTextColor());
         int minuteColor = WidgetPreferences.getMinuteTextColor(context, appWidgetId, getDefaultTextColor());
@@ -195,6 +176,11 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         int right = Math.max(0, -offsetX);
         int bottom = Math.max(0, -offsetY);
         views.setViewPadding(wrapperViewId, left, top, right, bottom);
+    }
+
+    private void applyTranslationToWrapper(RemoteViews views, int wrapperViewId, int offsetX, int offsetY) {
+        // RemoteViews does not support direct translation, so use padding as approximation
+        applyPaddingToWrapper(views, wrapperViewId, offsetX, offsetY);
     }
 
     public static void updateLocalWidgetView(Context context, android.view.View rootView, int appWidgetId) {
