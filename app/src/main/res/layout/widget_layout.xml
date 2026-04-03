@@ -17,6 +17,7 @@
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:padding="2dp">
+            android:layout_gravity="center">
 
             <!-- Hour text wrapper for independent positioning -->
             <FrameLayout
