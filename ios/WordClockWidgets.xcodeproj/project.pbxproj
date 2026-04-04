@@ -3,95 +3,82 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 56;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		0A5BB5DFCF03BD61FBAE563F /* CompatibilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8792FD4D41972A8691E5C144 /* CompatibilityChecker.swift */; };
-		316C0058A9976D29D870B71E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2D4BE54368925547B61EAF /* AppDelegate.swift */; };
-		355261B1B9EDA49D153E8E5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F2F1A9A6565DCF5F7141D14 /* LaunchScreen.storyboard */; };
-		706603F5C4BD04D8FAFFC9BE /* WidgetPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980CCE9B95613201AF15C93B /* WidgetPreferences.swift */; };
-		7CAEFD7012D42D385A807C1B /* NumberToWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BFB3352F165A9BA0E51243 /* NumberToWords.swift */; };
-		7E09050AD1A8D9CE099D1F59 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 140BFDBBAEC9C8C6B1B68599 /* Foundation.framework */; };
-		BDF8860F22A5BF19342835C3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07224F2E5E73968F33B579FC /* ViewController.swift */; };
-		DC2CEBBBA7793DA06D3F1D50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C65596C6896B1AAB84FE56 /* SceneDelegate.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		07224F2E5E73968F33B579FC /* ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = WordClockWidgets/ViewController.swift; sourceTree = "<group>"; };
-		0B2D4BE54368925547B61EAF /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = WordClockWidgets/AppDelegate.swift; sourceTree = "<group>"; };
-		140BFDBBAEC9C8C6B1B68599 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		4FDF8FBEF7D4E036F2B4E4DA /* WordClockWidgets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordClockWidgets.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		79BFB3352F165A9BA0E51243 /* NumberToWords.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NumberToWords.swift; path = WordClockWidgets/NumberToWords.swift; sourceTree = "<group>"; };
-		7F2F1A9A6565DCF5F7141D14 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = WordClockWidgets/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8792FD4D41972A8691E5C144 /* CompatibilityChecker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CompatibilityChecker.swift; path = WordClockWidgets/CompatibilityChecker.swift; sourceTree = "<group>"; };
-		980CCE9B95613201AF15C93B /* WidgetPreferences.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WidgetPreferences.swift; path = WordClockWidgets/WidgetPreferences.swift; sourceTree = "<group>"; };
-		C9C65596C6896B1AAB84FE56 /* SceneDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = WordClockWidgets/SceneDelegate.swift; sourceTree = "<group>"; };
-		E93B50D4604C6A5443FA8B9C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = WordClockWidgets/Info.plist; sourceTree = "<group>"; };
+		01A5E7F1 = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; path = "WordClockWidgets-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		01A5E7F2 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F3 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F4 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F5 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberToWords.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F6 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetPreferences.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F7 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompatibilityChecker.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F8 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		01A5E7F9 = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		01A5E7FA = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		01A5E7FB = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WordClockWidgetsWidget-Info.plist"; sourceTree = SOURCE_ROOT; };
+		01A5E7FC = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordClockWidgetsWidget.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7FD = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = UIKit.framework; path = Platforms/iPhoneOS/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		01A5E7FE = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = Foundation.framework; path = Platforms/iPhoneOS/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		01A5E7FF = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = SwiftUI.framework; path = Platforms/iPhoneOS/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
+		01A5E800 = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = WidgetKit.framework; path = Platforms/iPhoneOS/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/WidgetKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		AEBA227FEE5E6BD66140DF17 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7E09050AD1A8D9CE099D1F59 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
 /* Begin PBXGroup section */
-		2170B73173E7C6A75A9353AA /* Frameworks */ = {
+		01A5E7EE = {
 			isa = PBXGroup;
 			children = (
-				8EB6F715E03557143DBA2AE9 /* iOS */,
+				01A5E7F2,
+				01A5E7F3,
+				01A5E7F4,
+				01A5E7F5,
+				01A5E7F6,
+				01A5E7F7,
+				01A5E7F8,
+				01A5E7F9,
+				01A5E7FA,
+				01A5E7FD,
+				01A5E7FE,
+				01A5E7FF,
+				01A5E800,
 			);
-			name = Frameworks;
+			name = WordClockWidgets;
 			sourceTree = "<group>";
 		};
-		3954475FCA0485B9309701DB = {
+		01A5E812 = {
 			isa = PBXGroup;
 			children = (
-				68479FC5BCA63E6265E074BC /* Products */,
-				2170B73173E7C6A75A9353AA /* Frameworks */,
-				0B2D4BE54368925547B61EAF /* AppDelegate.swift */,
-				C9C65596C6896B1AAB84FE56 /* SceneDelegate.swift */,
-				07224F2E5E73968F33B579FC /* ViewController.swift */,
-				79BFB3352F165A9BA0E51243 /* NumberToWords.swift */,
-				980CCE9B95613201AF15C93B /* WidgetPreferences.swift */,
-				8792FD4D41972A8691E5C144 /* CompatibilityChecker.swift */,
-				7F2F1A9A6565DCF5F7141D14 /* LaunchScreen.storyboard */,
-				E93B50D4604C6A5443FA8B9C /* Info.plist */,
+				01A5E7FC,
+				01A5E7FB,
 			);
-			sourceTree = "<group>";
-		};
-		68479FC5BCA63E6265E074BC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4FDF8FBEF7D4E036F2B4E4DA /* WordClockWidgets.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		8EB6F715E03557143DBA2AE9 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				140BFDBBAEC9C8C6B1B68599 /* Foundation.framework */,
-			);
-			name = iOS;
+			name = WordClockWidgetsWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXSourcesBuildPhase section */
+		01A5E801 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01A5E7F2,
+				01A5E7F3,
+				01A5E7F4,
+				01A5E7F5,
+				01A5E7F6,
+				01A5E7F7,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		53F88065457B16639BA508D2 /* WordClockWidgets */ = {
+		01A5E802 = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ACCDE5455490965847DF2E87 /* Build configuration list for PBXNativeTarget "WordClockWidgets" */;
+			buildConfigurationList = 01A5E80A;
 			buildPhases = (
-				23C0073F66752DF2C83564AE /* Sources */,
-				AEBA227FEE5E6BD66140DF17 /* Frameworks */,
-				6E22D8E5D36CBCBB1C13AB65 /* Resources */,
+				01A5E801,
 			);
 			buildRules = (
 			);
@@ -99,118 +86,67 @@
 			);
 			name = WordClockWidgets;
 			productName = WordClockWidgets;
-			productReference = 4FDF8FBEF7D4E036F2B4E4DA /* WordClockWidgets.app */;
+			productReference = 01A5E803;
 			productType = "com.apple.product-type.application";
+		};
+		01A5E804 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01A5E80B;
+			buildPhases = (
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WordClockWidgetsWidget;
+			productName = WordClockWidgetsWidget;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B4858F10FD5B1F113CD83CB0 /* Project object */ = {
+		01A5E7F1 = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					01A5E802 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					01A5E804 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
 			};
-			buildConfigurationList = D2FCA8C08E900F8E6A5A6780 /* Build configuration list for PBXProject "WordClockWidgets" */;
-			compatibilityVersion = "Xcode 3.2";
+			buildConfigurationList = 01A5E805;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 3954475FCA0485B9309701DB;
-			minimizedProjectReferenceProxies = 0;
-			preferredProjectObjectVersion = 77;
-			productRefGroup = 68479FC5BCA63E6265E074BC /* Products */;
+			mainGroup = 01A5E7EE;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				53F88065457B16639BA508D2 /* WordClockWidgets */,
+				01A5E802,
+				01A5E804,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		6E22D8E5D36CBCBB1C13AB65 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				355261B1B9EDA49D153E8E5C /* LaunchScreen.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		23C0073F66752DF2C83564AE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				316C0058A9976D29D870B71E /* AppDelegate.swift in Sources */,
-				DC2CEBBBA7793DA06D3F1D50 /* SceneDelegate.swift in Sources */,
-				BDF8860F22A5BF19342835C3 /* ViewController.swift in Sources */,
-				7CAEFD7012D42D385A807C1B /* NumberToWords.swift in Sources */,
-				706603F5C4BD04D8FAFFC9BE /* WidgetPreferences.swift in Sources */,
-				0A5BB5DFCF03BD61FBAE563F /* CompatibilityChecker.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
 /* Begin XCBuildConfiguration section */
-		114ADFE3573B184CA0D1042A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = WordClockWidgets/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.akfsno.wordclockwidgets;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		3F6FDA0BF030E9F9F0CDBE72 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = WordClockWidgets/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.akfsno.wordclockwidgets;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		7FF765C2A8341504662272CF /* Release */ = {
+		01A5E806 = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_DIALECT = "c++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -230,14 +166,13 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_C_LANGUAGE_DIALECT = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -245,98 +180,91 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 5.9;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		D29F1B3299765B3131B611D4 /* Debug */ = {
+		01A5E807 = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				EXECUTABLE_NAME = "$(EXECUTABLE_NAME)";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.akfsno.wordclockwidgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Debug;
+			name = Release;
+		};
+		01A5E80C = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.akfsno.wordclockwidgets.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		ACCDE5455490965847DF2E87 /* Build configuration list for PBXNativeTarget "WordClockWidgets" */ = {
+		01A5E805 = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				114ADFE3573B184CA0D1042A /* Release */,
-				3F6FDA0BF030E9F9F0CDBE72 /* Debug */,
+				01A5E806,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D2FCA8C08E900F8E6A5A6780 /* Build configuration list for PBXProject "WordClockWidgets" */ = {
+		01A5E80A = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D29F1B3299765B3131B611D4 /* Debug */,
-				7FF765C2A8341504662272CF /* Release */,
+				01A5E807,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01A5E80B = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01A5E80C,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = B4858F10FD5B1F113CD83CB0 /* Project object */;
+	rootObject = 01A5E7F1;
 }

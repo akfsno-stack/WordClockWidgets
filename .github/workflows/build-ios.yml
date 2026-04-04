@@ -34,6 +34,12 @@ jobs:
           xcodebuild -version
           swift --version
       
+      - name: Generate Xcode project
+        run: |
+          cd $PROJECT_PATH
+          chmod +x generate-xcode-project.sh
+          ./generate-xcode-project.sh
+      
       - name: Set up environment
         run: |
           cd $PROJECT_PATH

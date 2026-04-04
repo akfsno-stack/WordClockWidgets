@@ -1,0 +1,309 @@
+#!/bin/bash
+# Generate Xcode project for WordClockWidgets iOS app
+# Run on macOS with Xcode installed
+
+set -e
+
+PROJ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJ_NAME="WordClockWidgets"
+PROJ_FILE="$PROJ_DIR/${PROJ_NAME}.xcodeproj"
+WORKSPACE_FILE="$PROJ_DIR/${PROJ_NAME}.xcworkspace"
+
+echo "📦 Generating Xcode project in $PROJ_DIR"
+
+# Remove old project if exists
+if [ -d "$PROJ_FILE" ]; then
+    echo "Removing old project..."
+    rm -rf "$PROJ_FILE"
+fi
+
+# Create project structure using plutil (macOS built-in tool)
+echo "Creating project structure..."
+mkdir -p "$PROJ_FILE/project.xcworkspace"
+
+# Create minimal but valid pbxproj from template
+cat > "$PROJ_FILE/project.pbxproj" << 'PBXPROJ_EOF'
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXFileReference section */
+		01A5E7F1 = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; path = "WordClockWidgets-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		01A5E7F2 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F3 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F4 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F5 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberToWords.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F6 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetPreferences.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F7 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompatibilityChecker.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7F8 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		01A5E7F9 = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		01A5E7FA = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		01A5E7FB = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WordClockWidgetsWidget-Info.plist"; sourceTree = SOURCE_ROOT; };
+		01A5E7FC = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordClockWidgetsWidget.swift; sourceTree = SOURCE_ROOT; };
+		01A5E7FD = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = UIKit.framework; path = Platforms/iPhoneOS/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		01A5E7FE = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = Foundation.framework; path = Platforms/iPhoneOS/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		01A5E7FF = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = SwiftUI.framework; path = Platforms/iPhoneOS/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
+		01A5E800 = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = WidgetKit.framework; path = Platforms/iPhoneOS/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/WidgetKit.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		01A5E7EE = {
+			isa = PBXGroup;
+			children = (
+				01A5E7F2,
+				01A5E7F3,
+				01A5E7F4,
+				01A5E7F5,
+				01A5E7F6,
+				01A5E7F7,
+				01A5E7F8,
+				01A5E7F9,
+				01A5E7FA,
+				01A5E7FD,
+				01A5E7FE,
+				01A5E7FF,
+				01A5E800,
+			);
+			name = WordClockWidgets;
+			sourceTree = "<group>";
+		};
+		01A5E812 = {
+			isa = PBXGroup;
+			children = (
+				01A5E7FC,
+				01A5E7FB,
+			);
+			name = WordClockWidgetsWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXSourcesBuildPhase section */
+		01A5E801 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01A5E7F2,
+				01A5E7F3,
+				01A5E7F4,
+				01A5E7F5,
+				01A5E7F6,
+				01A5E7F7,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		01A5E802 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01A5E80A;
+			buildPhases = (
+				01A5E801,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WordClockWidgets;
+			productName = WordClockWidgets;
+			productReference = 01A5E803;
+			productType = "com.apple.product-type.application";
+		};
+		01A5E804 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01A5E80B;
+			buildPhases = (
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WordClockWidgetsWidget;
+			productName = WordClockWidgetsWidget;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		01A5E7F1 = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					01A5E802 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					01A5E804 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 01A5E805;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 01A5E7EE;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				01A5E802,
+				01A5E804,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		01A5E806 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_DIALECT = "c++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_DIALECT = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		01A5E807 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				EXECUTABLE_NAME = "$(EXECUTABLE_NAME)";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.akfsno.wordclockwidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		01A5E80C = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.akfsno.wordclockwidgets.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		01A5E805 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01A5E806,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01A5E80A = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01A5E807,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01A5E80B = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01A5E80C,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 01A5E7F1;
+}
+PBXPROJ_EOF
+
+# Create workspace structure
+mkdir -p "$WORKSPACE_FILE"
+cat > "$WORKSPACE_FILE/contents.xcworkspacedata" << 'WORKSPACE_EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace version = "1.0">
+   <FileRef location = "group:WordClockWidgets.xcodeproj">
+   </FileRef>
+</Workspace>
+WORKSPACE_EOF
+
+echo "✅ Xcode project generated at $PROJ_FILE"
+echo "✅ Workspace created at $WORKSPACE_FILE"
