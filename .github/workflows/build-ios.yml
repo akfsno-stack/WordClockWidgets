@@ -41,7 +41,7 @@ jobs:
       - name: Check and prepare Xcode project
         run: |
           cd $PROJECT_PATH
-          echo "=== Preparing Xcode project ==="
+          echo "=== Checking project structure ==="
           
           # Check required files
           echo "Checking required files:"
@@ -49,7 +49,6 @@ jobs:
             "WordClockWidgets/Info.plist"
             "WordClockWidgets/AppDelegate.swift"
             "WordClockWidgets/SceneDelegate.swift"
-            "Package.swift"
           )
           
           MISSING=0
@@ -67,23 +66,16 @@ jobs:
             exit 1
           fi
           
-          # Always regenerate project from Package.swift to ensure it's fresh
-          echo ""
-          echo "Regenerating Xcode project from Package.swift..."
-          
-          # Remove old project if exists
-          rm -rf WordClockWidgets.xcodeproj WordClockWidgets.xcworkspace
-          
-          # Generate new project
-          swift package generate-xcodeproj --output "WordClockWidgets.xcodeproj" 2>&1 | tail -15
-          
-          if [ ! -d "WordClockWidgets.xcodeproj" ]; then
-            echo "❌ Failed to generate Xcode project"
+          # Check workspace
+          if [ -d "$WORKSPACE" ]; then
+            echo "✅ Found workspace: $WORKSPACE"
+            USE_WORKSPACE=1
+          else
+            echo "❌ Workspace not found: $WORKSPACE"
             exit 1
           fi
           
-          echo "✅ Xcode project generated fresh from Package.swift"
-          USE_WORKSPACE=0
+          echo "✅ Project structure verified"
           echo "USE_WORKSPACE=$USE_WORKSPACE" >> $GITHUB_ENV
       
       - name: Clean build
@@ -103,20 +95,34 @@ jobs:
           
           echo "=== Building for iOS device (arm64) ==="
           
-          # Always use project since we regenerated it fresh
-          echo "Building with fresh project: WordClockWidgets.xcodeproj"
-          
-          xcodebuild \
-            -project "WordClockWidgets.xcodeproj" \
-            -scheme "$PRODUCT_NAME" \
-            -configuration "$CONFIGURATION" \
-            -destination "generic/platform=ios" \
-            -derivedDataPath "build/DerivedData" \
-            -arch arm64 \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO \
-            build 2>&1 | tail -50
+          # Determine build command
+          if [ "$USE_WORKSPACE" = "1" ]; then
+            echo "Building with workspace: $WORKSPACE"
+            xcodebuild \
+              -workspace "$WORKSPACE" \
+              -scheme "$PRODUCT_NAME" \
+              -configuration "$CONFIGURATION" \
+              -destination "generic/platform=ios" \
+              -derivedDataPath "build/DerivedData" \
+              -arch arm64 \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO \
+              CODE_SIGNING_ALLOWED=NO \
+              build 2>&1 | tail -60
+          else
+            echo "Building with project: WordClockWidgets.xcodeproj"
+            xcodebuild \
+              -project "WordClockWidgets.xcodeproj" \
+              -scheme "$PRODUCT_NAME" \
+              -configuration "$CONFIGURATION" \
+              -destination "generic/platform=ios" \
+              -derivedDataPath "build/DerivedData" \
+              -arch arm64 \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO \
+              CODE_SIGNING_ALLOWED=NO \
+              build 2>&1 | tail -60
+          fi
           
           BUILD_RESULT=${PIPESTATUS[0]}
           
@@ -126,15 +132,6 @@ jobs:
           else
             echo ""
             echo "❌ Build failed with exit code: $BUILD_RESULT"
-            
-            # Try to find where the error is
-            echo ""
-            echo "Searching for error details..."
-            find build/DerivedData -name "*.log" -type f 2>/dev/null | head -5 | while read logfile; do
-              echo "Log file: $logfile"
-              tail -30 "$logfile"
-            done
-            
             exit $BUILD_RESULT
           fi
       
