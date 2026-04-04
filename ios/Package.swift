@@ -6,16 +6,6 @@ let package = Package(
     platforms: [
         .iOS(.v14)
     ],
-    products: [
-        .library(
-            name: "WordClockWidgets",
-            targets: ["WordClockWidgets"]
-        ),
-        .library(
-            name: "WordClockWidgetsWidget",
-            targets: ["WordClockWidgetsWidget"]
-        )
-    ],
     targets: [
         .target(
             name: "WordClockWidgets",

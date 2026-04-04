@@ -7,32 +7,41 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		000001 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = WordClockWidgets/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
-		000002 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = WordClockWidgets/SceneDelegate.swift; sourceTree = SOURCE_ROOT; };
-		000003 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = WordClockWidgets/ViewController.swift; sourceTree = SOURCE_ROOT; };
-		000004 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumberToWords.swift; path = WordClockWidgets/NumberToWords.swift; sourceTree = SOURCE_ROOT; };
-		000005 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WidgetPreferences.swift; path = WordClockWidgets/WidgetPreferences.swift; sourceTree = SOURCE_ROOT; };
-		000006 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompatibilityChecker.swift; path = WordClockWidgets/CompatibilityChecker.swift; sourceTree = SOURCE_ROOT; };
-		000007 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = WordClockWidgets/Info.plist; sourceTree = SOURCE_ROOT; };
-		000008 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WordClockWidgetsWidget.swift; path = WordClockWidgetsWidget/WordClockWidgetsWidget.swift; sourceTree = SOURCE_ROOT; };
-		000009 = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = WordClockWidgetsWidget/Info.plist; sourceTree = SOURCE_ROOT; };
-		000010 = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; name = WordClockWidgets.app; path = WordClockWidgets.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		000011 = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = WordClockWidgets/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		000001 = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = AppDelegate.swift; path = WordClockWidgets/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
+		000002 = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = SceneDelegate.swift; path = WordClockWidgets/SceneDelegate.swift; sourceTree = SOURCE_ROOT; };
+		000003 = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = ViewController.swift; path = WordClockWidgets/ViewController.swift; sourceTree = SOURCE_ROOT; };
+		000004 = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = NumberToWords.swift; path = WordClockWidgets/NumberToWords.swift; sourceTree = SOURCE_ROOT; };
+		000005 = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = WidgetPreferences.swift; path = WordClockWidgets/WidgetPreferences.swift; sourceTree = SOURCE_ROOT; };
+		000006 = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = CompatibilityChecker.swift; path = WordClockWidgets/CompatibilityChecker.swift; sourceTree = SOURCE_ROOT; };
+		000007 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = WordClockWidgets/Info.plist; sourceTree = SOURCE_ROOT; };
+		000008 = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WordClockWidgets/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		000009 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordClockWidgets.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00000A = {isa = PBXFileReference; sourceTree = SOURCE_ROOT; name = Package.swift; path = Package.swift; };
 /* End PBXFileReference section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		100001 = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
 /* Begin PBXGroup section */
-		010001 = {
+		ROOT = {
 			isa = PBXGroup;
+			children = (
+				SOURCES,
+				PRODUCTS,
+				00000A,
+			);
+			sourceTree = SOURCE_ROOT;
+		};
+		SOURCES = {
+			isa = PBXGroup;
+			children = (
+				WORDCLOCK,
+			);
+			name = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		WORDCLOCK = {
+			isa = PBXGroup;
+			name = WordClockWidgets;
+			path = WordClockWidgets;
+			sourceTree = SOURCE_ROOT;
 			children = (
 				000001,
 				000002,
@@ -41,46 +50,27 @@
 				000005,
 				000006,
 				000007,
-				000011,
+				000008,
 			);
-			name = WordClockWidgets;
-			sourceTree = SOURCE_ROOT;
 		};
-		010002 = {
+		PRODUCTS = {
 			isa = PBXGroup;
 			children = (
-				000008,
 				000009,
 			);
-			name = WordClockWidgetsWidget;
-			sourceTree = SOURCE_ROOT;
-		};
-		010003 = {
-			isa = PBXGroup;
-			children = (
-				000010,
-			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		010004 = {
-			isa = PBXGroup;
-			children = (
-				010001,
-				010002,
-				010003,
-			);
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		100002 = {
+		NATIVE = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 200001;
+			buildConfigurationList = CONFIGLIST;
 			buildPhases = (
-				100003,
-				100001,
+				SOURCES_BUILD,
+				FRAMEWORKS_BUILD,
+				RESOURCES_BUILD,
 			);
 			buildRules = (
 			);
@@ -88,113 +78,104 @@
 			);
 			name = WordClockWidgets;
 			productName = WordClockWidgets;
-			productReference = 000010;
+			productReference = 000009;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		100000 = {
+		PROJECT = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					100002 = {
-						CreatedOnToolsVersion = 16.4;
-						ProvisioningStyle = Automatic;
+					NATIVE = {
+						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
-			buildConfigurationList = 200000;
-			compatibilityVersion = "Xcode 15.0";
+			buildConfigurationList = ROOTCONFIG;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
-			mainGroup = 010004;
-			productRefGroup = 010003;
+			mainGroup = ROOT;
+			productRefGroup = PRODUCTS;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				100002,
+				NATIVE,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		100003 = {
+		SOURCES_BUILD = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				000001,
-				000002,
-				000003,
-				000004,
-				000005,
-				000006,
-				000008,
+				000001_BUILD,
+				000002_BUILD,
+				000003_BUILD,
+				000004_BUILD,
+				000005_BUILD,
+				000006_BUILD,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin XCBuildConfiguration section */
-		200002 = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_DIALECT = "gnu++20";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_LEVEL = c99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
+/* Begin PBXFrameworksBuildPhase section */
+		FRAMEWORKS_BUILD = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		200003 = {
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		RESOURCES_BUILD = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000007_RES,
+				000008_RES,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXBuildFile section */
+		000001_BUILD = {isa = PBXBuildFile; fileRef = 000001; };
+		000002_BUILD = {isa = PBXBuildFile; fileRef = 000002; };
+		000003_BUILD = {isa = PBXBuildFile; fileRef = 000003; };
+		000004_BUILD = {isa = PBXBuildFile; fileRef = 000004; };
+		000005_BUILD = {isa = PBXBuildFile; fileRef = 000005; };
+		000006_BUILD = {isa = PBXBuildFile; fileRef = 000006; };
+		000007_RES = {isa = PBXBuildFile; fileRef = 000007; };
+		000008_RES = {isa = PBXBuildFile; fileRef = 000008; };
+/* End PBXBuildFile section */
+
+/* Begin XCBuildConfiguration section */
+		DEBUG = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
-				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_DIALECT = "gnu++20";
+				CLANG_CXX_LANGUAGE_DIALECT = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -214,17 +195,15 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_LEVEL = c99;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_DIALECT = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -232,55 +211,111 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = WordClockWidgets/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifestFileName = "LaunchScreen";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wordclockwidgets.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WordClockWidgets.app/WordClockWidgets";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
+				SWIFT_VERSION = 5.0;
+				WARNING_CFLAGS = (
+					"-Wextra",
+				);
 			};
 			name = Debug;
+		};
+		RELEASE = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_DIALECT = "c++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_DIALECT = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = (
+					"-Wextra",
+				);
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		200000 = {
+		ROOTCONFIG = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				200003,
-				200002,
+				DEBUG,
+				RELEASE,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		200001 = {
+		CONFIGLIST = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				200003,
-				200002,
+				DEBUG,
+				RELEASE,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -288,5 +323,5 @@
 /* End XCConfigurationList section */
 
 	};
-	rootObject = 100000;
+	rootObject = PROJECT;
 }
