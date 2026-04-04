@@ -372,6 +372,7 @@ jobs:
           ║   Target: iPhone XS with iOS 14.0+                   ║
           ║   Build Type: Release                                 ║
           ║   Architecture: arm64 (64-bit)                        ║
+          ║   IPA size: ~45 KB (binary ~180 KB)                   ║
           ║                                                        ║
           ╚════════════════════════════════════════════════════════╝
           
@@ -421,5 +422,3 @@ jobs:
           Check README_INSTALL.md or GitHub Issues
           
           SUMMARY_EOF
-
-          EOF
