@@ -74,8 +74,8 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         boolean showHour = WidgetPreferences.getShowHour(context, appWidgetId, true);
         boolean showMinute = WidgetPreferences.getShowMinute(context, appWidgetId, true);
         boolean showDayNight = WidgetPreferences.getShowDayNight(context, appWidgetId, true);
-        boolean showDate = WidgetPreferences.getShowDate(context, appWidgetId, true);
-        boolean showDayOfWeek = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, true);
+        boolean showDate = WidgetPreferences.getShowDate(context, appWidgetId, false);
+        boolean showDayOfWeek = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, false);
 
         boolean addZeroMinute = WidgetPreferences.getAddZeroMinute(context, appWidgetId, false);
 
@@ -152,6 +152,13 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         views.setTextColor(R.id.date_text, dateColor);
         views.setTextColor(R.id.day_of_week_text, dayOfWeekColor);
 
+        // Apply font sizes
+        views.setFloat(R.id.hour_text, "setTextSize", WidgetPreferences.getFontSize(context, appWidgetId, 24f));
+        views.setFloat(R.id.minute_text, "setTextSize", WidgetPreferences.getMinuteFontSize(context, appWidgetId, 24f));
+        views.setFloat(R.id.day_night_text, "setTextSize", WidgetPreferences.getDayNightFontSize(context, appWidgetId, 18f));
+        views.setFloat(R.id.date_text, "setTextSize", WidgetPreferences.getDateFontSize(context, appWidgetId, 18f));
+        views.setFloat(R.id.day_of_week_text, "setTextSize", WidgetPreferences.getDayOfWeekFontSize(context, appWidgetId, 18f));
+
         views.setViewVisibility(R.id.hour_text, showHour ? android.view.View.VISIBLE : android.view.View.GONE);
         views.setViewVisibility(R.id.minute_text, showMinute ? android.view.View.VISIBLE : android.view.View.GONE);
         views.setViewVisibility(R.id.day_night_text, showDayNight ? android.view.View.VISIBLE : android.view.View.GONE);
@@ -189,8 +196,8 @@ public abstract class BaseWordClockWidgetProvider extends AppWidgetProvider {
         boolean showHour = WidgetPreferences.getShowHour(context, appWidgetId, true);
         boolean showMinute = WidgetPreferences.getShowMinute(context, appWidgetId, true);
         boolean showDayNight = WidgetPreferences.getShowDayNight(context, appWidgetId, true);
-        boolean showDate = WidgetPreferences.getShowDate(context, appWidgetId, true);
-        boolean showDayOfWeek = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, true);
+        boolean showDate = WidgetPreferences.getShowDate(context, appWidgetId, false);
+        boolean showDayOfWeek = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, false);
 
         boolean addZeroMinute = WidgetPreferences.getAddZeroMinute(context, appWidgetId, false);
 

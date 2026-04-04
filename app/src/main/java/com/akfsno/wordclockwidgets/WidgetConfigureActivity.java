@@ -443,7 +443,7 @@ public class WidgetConfigureActivity extends Activity {
         }
 
         // Constrain elements within preview bounds (with some margin for text)
-        int margin = dpToPx(4); // Small margin to prevent text cutoff
+        int margin = 0; // Allow elements to reach edges
         int maxX = (containerW - viewW) / 2 - margin;
         int minX = -(containerW - viewW) / 2 + margin;
         int maxY = (containerH - viewH) / 2 - margin;
@@ -788,8 +788,8 @@ public class WidgetConfigureActivity extends Activity {
         WidgetPreferences.saveShowHour(this, appWidgetId, true);
         WidgetPreferences.saveShowMinute(this, appWidgetId, true);
         WidgetPreferences.saveShowDayNight(this, appWidgetId, true);
-        WidgetPreferences.saveShowDate(this, appWidgetId, true);
-        WidgetPreferences.saveShowDayOfWeek(this, appWidgetId, true);
+        WidgetPreferences.saveShowDate(this, appWidgetId, false);
+        WidgetPreferences.saveShowDayOfWeek(this, appWidgetId, false);
         // reset colors
         WidgetPreferences.saveHourTextColor(this, appWidgetId, getResources().getColor(android.R.color.black));
         WidgetPreferences.saveMinuteTextColor(this, appWidgetId, getResources().getColor(android.R.color.black));

@@ -310,8 +310,8 @@ public class BlockAdapter extends BaseExpandableListAdapter {
                 case "hour": showValue = WidgetPreferences.getShowHour(context, appWidgetId, true); break;
                 case "minute": showValue = WidgetPreferences.getShowMinute(context, appWidgetId, true); break;
                 case "dayNight": showValue = WidgetPreferences.getShowDayNight(context, appWidgetId, true); break;
-                case "date": showValue = WidgetPreferences.getShowDate(context, appWidgetId, true); break;
-                case "dayOfWeek": showValue = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, true); break;
+                case "date": showValue = WidgetPreferences.getShowDate(context, appWidgetId, false); break;
+                case "dayOfWeek": showValue = WidgetPreferences.getShowDayOfWeek(context, appWidgetId, false); break;
                 default: showValue = true; break;
             }
             valueText.setText(showValue ? "Скрыть" : "Показать");
@@ -320,8 +320,8 @@ public class BlockAdapter extends BaseExpandableListAdapter {
                 boolean current = blockKey.equals("hour") ? WidgetPreferences.getShowHour(context, appWidgetId, true)
                         : blockKey.equals("minute") ? WidgetPreferences.getShowMinute(context, appWidgetId, true)
                         : blockKey.equals("dayNight") ? WidgetPreferences.getShowDayNight(context, appWidgetId, true)
-                        : blockKey.equals("date") ? WidgetPreferences.getShowDate(context, appWidgetId, true)
-                        : WidgetPreferences.getShowDayOfWeek(context, appWidgetId, true);
+                        : blockKey.equals("date") ? WidgetPreferences.getShowDate(context, appWidgetId, false)
+                        : WidgetPreferences.getShowDayOfWeek(context, appWidgetId, false);
                 boolean newValue = !current;
                 switch (blockKey) {
                     case "hour": WidgetPreferences.saveShowHour(context, appWidgetId, newValue); break;
