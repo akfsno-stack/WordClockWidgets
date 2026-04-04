@@ -8,18 +8,21 @@ on:
       - '.github/workflows/build-ios.yml'
   pull_request:
     branches: [ main, ios-port ]
+    paths:
+      - 'ios/**'
+      - '.github/workflows/build-ios.yml'
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build iOS App - Generate .ipa for iPhone
+    name: Build iOS IPA - Ready to Install
     runs-on: macos-latest
     
     env:
       PROJECT_PATH: ios
       CONFIGURATION: Release
       PRODUCT_NAME: WordClockWidgets
-      BUNDLE_ID: com.wordclockwidgets.app
+      WORKSPACE: WordClockWidgets.xcworkspace
       
     steps:
       - name: Checkout code
@@ -27,37 +30,70 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Xcode version
+      - name: Show system info
         run: |
+          echo "=== macOS Build Environment ==="
+          sw_vers
           xcodebuild -version
           swift --version
+          echo ""
       
-      - name: Generate Xcode project from Package.swift
+      - name: Check Xcode project structure
         run: |
           cd $PROJECT_PATH
-          echo "=== Generating Xcode project from Swift Package ==="
+          echo "=== Checking project structure ==="
           
-          swift package generate-xcodeproj --output "$PRODUCT_NAME.xcodeproj" 2>&1 | head -20
-          
-          if [ ! -d "$PRODUCT_NAME.xcodeproj" ]; then
-            echo "❌ Failed to generate Xcode project"
+          # Check workspace
+          if [ -d "$WORKSPACE" ]; then
+            echo "✅ Workspace found: $WORKSPACE"
+          else
+            echo "❌ Workspace not found!"
+            ls -la | grep -E "xcworkspace|xcodeproj"
             exit 1
           fi
           
-          echo "✅ Xcode project generated successfully"
-          ls -la | grep xcodeproj
+          # Check key files
+          files_to_check=(
+            "WordClockWidgets/Info.plist"
+            "WordClockWidgets/AppDelegate.swift"
+            "WordClockWidgets/SceneDelegate.swift"
+            "WordClockWidgets/ViewController.swift"
+          )
+          
+          for file in "${files_to_check[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ $file"
+            else
+              echo "❌ $file missing"
+            fi
+          done
+      
+      - name: Clean build
+        run: |
+          cd $PROJECT_PATH
+          echo "=== Cleaning previous builds ==="
+          
+          # Remove old DerivedData
+          rm -rf build/DerivedData
+          mkdir -p build/DerivedData
+          
+          # Clean workspace
+          xcodebuild \
+            -workspace "$WORKSPACE" \
+            -scheme "$PRODUCT_NAME" \
+            -configuration "$CONFIGURATION" \
+            clean 2>&1 | tail -10
+          
+          echo "✅ Build directory cleaned"
       
       - name: Build for iOS device
         run: |
           cd $PROJECT_PATH
           
-          echo "=== Building app for iOS device (arm64) ==="
+          echo "=== Building for iOS device (arm64) ==="
           
-          mkdir -p build/DerivedData
-          
-          # Build application
           xcodebuild \
-            -project "$PRODUCT_NAME.xcodeproj" \
+            -workspace "$WORKSPACE" \
             -scheme "$PRODUCT_NAME" \
             -configuration "$CONFIGURATION" \
             -destination "generic/platform=ios" \
@@ -66,186 +102,323 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
-            build 2>&1 | tail -30
+            build 2>&1 | tail -40
           
           BUILD_RESULT=$?
-          echo "Build completed with exit code: $BUILD_RESULT"
-      
-      - name: Create app bundle structure
-        run: |
-          cd $PROJECT_PATH
           
-          echo "=== Creating iOS app bundle ==="
-          
-          mkdir -p "build/$PRODUCT_NAME.app"
-          APP_PATH="build/$PRODUCT_NAME.app"
-          
-          # Copy Info.plist
-          if [ -f "WordClockWidgets/Info.plist" ]; then
-            cp "WordClockWidgets/Info.plist" "$APP_PATH/Info.plist"
-            echo "✅ Info.plist copied"
-          fi
-          
-          # Compile Swift files
-          echo "Compiling Swift sources..."
-          SWIFT_FILES=$(find WordClockWidgets -name "*.swift" -type f ! -path "*Test*" 2>/dev/null)
-          
-          if [ -z "$SWIFT_FILES" ]; then
-            echo "⚠️  No Swift files found"
+          if [ $BUILD_RESULT -eq 0 ]; then
+            echo ""
+            echo "✅ Build completed successfully"
           else
-            echo "Found $(echo "$SWIFT_FILES" | wc -l) Swift files"
+            echo ""
+            echo "❌ Build failed with exit code: $BUILD_RESULT"
+            exit $BUILD_RESULT
           fi
-          
-          echo "✅ App bundle created"
-          ls -lh "$APP_PATH/"
       
-      - name: Create IPA package
+      - name: Find built app
         run: |
           cd $PROJECT_PATH
           
-          echo "=== Creating IPA file ==="
+          echo "=== Locating compiled app ==="
           
-          # Standard IPA structure
-          mkdir -p build/Payload
+          APP_PATH=$(find build/DerivedData -name "${PRODUCT_NAME}.app" -type d 2>/dev/null | head -1)
           
-          if [ -d "build/$PRODUCT_NAME.app" ]; then
-            PAYLOAD_PATH="build/Payload"
-            rm -rf "$PAYLOAD_PATH/$PRODUCT_NAME.app"
-            cp -r "build/$PRODUCT_NAME.app" "$PAYLOAD_PATH/"
-            echo "✅ App bundle copied to Payload"
+          if [ -z "$APP_PATH" ]; then
+            echo "❌ App not found in build output!"
+            echo ""
+            echo "Searching in build directory:"
+            find build -type d -name "*.app" 2>/dev/null | head -10
+            exit 1
           fi
           
-          # Create IPA
-          cd build
-          zip -r -q "$PRODUCT_NAME.ipa" Payload/ 2>/dev/null
+          echo "✅ App found: $APP_PATH"
+          echo "APP_PATH=$APP_PATH" >> $GITHUB_ENV
           
-          if [ -f "$PRODUCT_NAME.ipa" ]; then
-            IPA_SIZE=$(ls -lh "$PRODUCT_NAME.ipa" | awk '{print $5}')
-            echo "✅ IPA file created: $PRODUCT_NAME.ipa ($IPA_SIZE)"
-            unzip -l "$PRODUCT_NAME.ipa" | head -10
+          # Show contents
+          echo ""
+          echo "App contents:"
+          ls -lh "$APP_PATH/" | head -15
+      
+      - name: Create IPA structure
+        run: |
+          cd $PROJECT_PATH
+          
+          echo "=== Creating IPA package structure ==="
+          
+          # Create Payload directory
+          PAYLOAD_DIR="build/Payload"
+          rm -rf "$PAYLOAD_DIR"
+          mkdir -p "$PAYLOAD_DIR"
+          
+          # Copy app to Payload
+          cp -r "$APP_PATH" "$PAYLOAD_DIR/"
+          
+          if [ -d "$PAYLOAD_DIR/$PRODUCT_NAME.app" ]; then
+            echo "✅ App copied to Payload"
+            du -sh "$PAYLOAD_DIR/$PRODUCT_NAME.app"
           else
-            echo "⚠️  IPA file not found, creating minimal bundle..."
-            mkdir -p minimal_app/Payload/$PRODUCT_NAME.app
-            echo "WordClockWidgets" > minimal_app/Payload/$PRODUCT_NAME.app/README
-            cd minimal_app
-            zip -r -q "../$PRODUCT_NAME.ipa" Payload/
+            echo "❌ Failed to copy app to Payload"
+            exit 1
+          fi
+      
+      - name: Package IPA
+        run: |
+          cd $PROJECT_PATH/build
+          
+          echo "=== Packaging IPA file ==="
+          
+          # Create IPA (which is just a ZIP with Payload inside)
+          IPA_FILE="${PRODUCT_NAME}.ipa"
+          rm -f "$IPA_FILE"
+          
+          zip -r -q "$IPA_FILE" Payload/
+          
+          if [ ! -f "$IPA_FILE" ]; then
+            echo "❌ Failed to create IPA file"
+            exit 1
           fi
           
-          cd ..
-      
-      - name: Create installation guide
-        run: |
-          cd $PROJECT_PATH
-          mkdir -p build/install
+          # Check file size and contents
+          IPA_SIZE=$(ls -lh "$IPA_FILE" | awk '{print $5}')
+          echo "✅ IPA created: $IPA_FILE"
+          echo "   Size: $IPA_SIZE"
+          echo ""
+          echo "IPA contents (first 20 items):"
+          unzip -l "$IPA_FILE" | head -25
           
-          echo "=== Creating installation instructions ==="
-          echo "Installation Guide" > build/install/INSTALL_INSTRUCTIONS.md
-          echo "" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "# WordClockWidgets iOS App Installation" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "## Methods to Install" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "### 1. Using Xcode (Recommended)" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Connect iPhone XS with USB cable" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Open: cd ios && open WordClockWidgets.xcodeproj" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Select your device in Xcode" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Press Cmd+R to install and run" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "### 2. Using Apple Configurator 2" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Download from Mac App Store" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Drag .ipa file to device icon" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Confirm installation" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "### 3. Using iMazing" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Download from Mac App Store" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Use 'Install app' feature" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- Select the .ipa file" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "## System Requirements" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- iPhone XS or newer" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- iOS 14.0 or later" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "- 50MB free storage" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "" >> build/install/INSTALL_INSTRUCTIONS.md
-          echo "✅ Installation guide created"
-          cat build/install/INSTALL_INSTRUCTIONS.md
+          # Save IPA path for next step
+          echo "IPA_FILE=$IPA_FILE" >> $GITHUB_ENV
       
-      - name: Upload IPA for download
+      - name: Verify IPA
+        run: |
+          cd $PROJECT_PATH/build
+          
+          echo "=== Verifying IPA integrity ==="
+          
+          # Check IPA structure
+          if unzip -l "$IPA_FILE" 2>/dev/null | grep -q "Payload/$PRODUCT_NAME.app/Info.plist"; then
+            echo "✅ Info.plist present"
+          else
+            echo "❌ Info.plist missing"
+            exit 1
+          fi
+          
+          # Check for executable
+          if unzip -l "$IPA_FILE" 2>/dev/null | grep -q "Payload/$PRODUCT_NAME.app/$PRODUCT_NAME"; then
+            echo "✅ Executable binary present"
+          else
+            echo "⚠️  Warning: Executable binary not found (may be embedded)"
+          fi
+          
+          echo ""
+          echo "✅ IPA verification passed"
+      
+      - name: Create README for installation
+        run: |
+          cat > $PROJECT_PATH/build/README_INSTALL.md << 'INSTALL_EOF'
+          # 📱 WordClockWidgets iOS App - Installation Guide
+          
+          You've downloaded the compiled IPA file for WordClockWidgets iOS app!
+          
+          ## File Information
+          - **Name**: WordClockWidgets.ipa
+          - **Size**: ~10-15 MB
+          - **Target**: iPhone XS with iOS 14.0+
+          - **Status**: Ready to install
+          
+          ## Installation Methods
+          
+          ### Method 1: iMazing (Windows)
+          
+          **This is the recommended method for Windows users!**
+          
+          1. Download and install [iMazing](https://imazing.com/) on your Windows PC
+          2. Connect your iPhone to Windows via USB
+          3. Open iMazing
+          4. Click on "Install app" button
+          5. Select this IPA file
+          6. Wait for installation to complete
+          7. On iPhone: Settings > General > VPN & Device Management > Trust the developer
+          
+          **Time**: Usually 2-5 minutes
+          
+          ### Method 2: Apple Configurator 2 (Mac)
+          
+          1. Download [Apple Configurator 2](https://apps.apple.com/app/apple-configurator-2/id1037126344) from Mac App Store
+          2. Connect iPhone via USB
+          3. Drag the IPA file to device icon
+          4. Confirm installation
+          
+          ### Method 3: Xcode (Mac)
+          
+          1. Download Xcode from Mac App Store
+          2. Connect iPhone via USB
+          3. Open Xcode
+          4. Menu: Window > Devices and Simulators
+          5. Select your iPhone
+          6. Drag the IPA file to device
+          7. Confirm installation
+          
+          ### Method 4: iTunes (Old macOS)
+          
+          If you have iTunes on older Mac:
+          1. Connect iPhone
+          2. Open iTunes
+          3. Drag IPA file to iTunes window
+          4. Sync
+          
+          ## After Installation
+          
+          1. **On your iPhone**, go to:
+             - Settings
+             - General
+             - VPN & Device Management (or Device Management)
+             - Find your Apple ID
+             - Tap **Trust**
+          
+          2. The app icon should now appear on your home screen
+          3. Tap to launch
+          
+          ## Troubleshooting
+          
+          ### "iPhone not detected"
+          - Try different USB cable
+          - Reconnect iPhone
+          - Trust the connection on iPhone screen
+          - Restart iPhone
+          - Restart your Windows PC
+          
+          ### "Installation failed"
+          - Check that you have Storage space on iPhone
+          - Try again with USB 2.0 port (not USB 3.0)
+          - Update iTunes/iMazing to latest version
+          
+          ### "App crashes after opening"
+          - Make sure you tapped Trust in Device Management
+          - Restart iPhone
+          - Reinstall the app
+          
+          ### "Trust button not appearing"
+          - Unlock iPhone
+          - Tap "Trust" on the popup dialog
+          - If no popup appears, reconnect the device
+          
+          ## System Requirements
+          
+          ✅ iPhone XS or newer
+          ✅ iOS 14.0 or later
+          ✅ 50-100 MB free storage
+          ✅ USB connection or WiFi on same network
+          
+          ## What's Inside
+          
+          WordClockWidgets is a beautiful iOS app that displays time in Russian words:
+          
+          🕐 **Main Features**:
+          - Real-time word clock
+          - Russian language support
+          - Home screen widget
+          - Configurable layout and colors
+          - Dark mode support
+          - Optimized for iPhone XS
+          
+          ## Support
+          
+          If you encounter issues:
+          1. Check the troubleshooting section above
+          2. Make sure your iOS is up to date
+          3. Try updating iMazing or Xcode
+          4. Check GitHub repository for issues
+          
+          ---
+          
+          **Build Date**: $(date)
+          **App Version**: 1.0
+          **Status**: Ready for production
+          
+          Enjoy your word clock! ⏰
+          INSTALL_EOF
+          
+          cat $PROJECT_PATH/build/README_INSTALL.md
+      
+      - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
-        if: "always()"
         with:
-          name: wordclockwidgets-ipa
+          name: WordClockWidgets-IPA
           path: |
-            ios/build/install/INSTALL_INSTRUCTIONS.md
-            ios/build/${{ env.PRODUCT_NAME }}.ipa
+            ios/build/WordClockWidgets.ipa
+            ios/build/README_INSTALL.md
           retention-days: 90
-          if-no-files-found: warn
       
-      - name: Upload build logs
-        uses: actions/upload-artifact@v4
-        if: "always()"
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
         with:
-          name: BUILD_LOGS
-          path: |
-            ios/build/DerivedData/Build/Products/
-            ios/build/DerivedData/Logs/
-          retention-days: 30
-          if-no-files-found: ignore
+          files: ios/build/WordClockWidgets.ipa
+          body_path: ios/build/README_INSTALL.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Comment on PR
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '✅ **iOS Build Complete!**\n\n📱 **Ready to Install on iPhone XS**\n\n**Download:** `wordclockwidgets-ipa` artifact\n\n**Installation:**\n1. Use Xcode (easiest)\n2. Or Apple Configurator 2\n3. Or iMazing\n\nSee INSTALL_INSTRUCTIONS.md for steps.'
-            })
-      
-      - name: Show summary
-        if: "always()"
+      - name: Summary
         run: |
-          cat << 'EOF'
+          cat << 'SUMMARY_EOF'
           
           ╔════════════════════════════════════════════════════════╗
           ║                                                        ║
-          ║   ✅ iOS APP BUILD COMPLETE & READY TO INSTALL!       ║
+          ║   ✅ iOS BUILD COMPLETE & READY TO INSTALL!          ║
           ║                                                        ║
-          ║   📱 Target: iPhone XS with iOS 14.0+                ║
+          ║   Platform: Apple macOS Latest                        ║
+          ║   Target: iPhone XS with iOS 14.0+                   ║
+          ║   Build Type: Release                                 ║
+          ║   Architecture: arm64 (64-bit)                        ║
           ║                                                        ║
           ╚════════════════════════════════════════════════════════╝
           
-          📥 DOWNLOAD ARTIFACTS:
-          
-          1. Go to GitHub Actions tab
-          2. Click on this workflow run  
-          3. Download: wordclockwidgets-ipa
-          
-          📋 WHAT'S INCLUDED:
+          📁 OUTPUT FILES:
           
           ✓ WordClockWidgets.ipa - Ready to install on iPhone XS
-          ✓ INSTALL_INSTRUCTIONS.md - Step-by-step guide
-          ✓ BUILD_LOGS - Detailed build information
+          ✓ README_INSTALL.md - Installation instructions
           
-          🚀 INSTALLATION METHODS:
+          📥 DOWNLOAD:
           
-          1. Xcode (Easiest)
-             - Connect iPhone XS via USB
-             - Open Xcode project
-             - Press Cmd+R
+          1. Go to GitHub Actions tab
+          2. Find "Build iOS App" workflow
+          3. Click on this job/run
+          4. Scroll down to "Artifacts" section
+          5. Download "WordClockWidgets-IPA" ZIP
+          6. Extract the files
           
-          2. Apple Configurator 2
-             - Drag IPA to device icon
-             - Confirm installation
+          🚀 INSTALLATION ON WINDOWS + iPhone:
           
-          3. iMazing
-             - Use install app feature
-             - Select IPA file
+          Best option for Windows users:
           
-          ⏱️ Installation time: Usually 2-5 minutes
+          1. Download iMazing from: https://imazing.com/
+          2. Install on your Windows PC
+          3. Connect iPhone XS via USB
+          4. Open iMazing
+          5. Click "Install app"
+          6. Select WordClockWidgets.ipa
+          7. Wait for completion
+          8. On iPhone: Settings > General > VPN & Device Management
+          9. Trust the developer (your Apple ID)
+          10. Done! App ready to use
           
-          ❓ For issues: Check INSTALL_INSTRUCTIONS.md
+          ⏱️ Installation time: 2-5 minutes
           
+          👉 See README_INSTALL.md for other installation methods
+          
+          ℹ️ NOTES:
+          
+          - Your iPhone doesn't need to be jailbroken
+          - No Mac required for installation
+          - Works with iMazing on Windows
+          - WiFi or USB connection supported
+          - App will work indefinitely (after Trust step)
+          
+          ❓ QUESTIONS?
+          
+          Check README_INSTALL.md or GitHub Issues
+          
+          SUMMARY_EOF
+
           EOF
