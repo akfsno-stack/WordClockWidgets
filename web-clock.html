@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Word Clock">
+    <link rel="manifest" href="/manifest.json">
+    <title>Word Clock - Часы словами</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .time-display {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin: 20px 0;
+            line-height: 1.2;
+        }
+
+        .time-words {
+            font-size: 1.8rem;
+            font-weight: 200;
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+
+        .digital-time {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-top: 20px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .install-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .install-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 480px) {
+            .time-display {
+                font-size: 2rem;
+            }
+            .time-words {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="time-display" id="timeDisplay">Загрузка...</div>
+        <div class="time-words" id="timeWords"></div>
+        <div class="digital-time" id="digitalTime"></div>
+
+        <a href="#" class="install-button" onclick="installPWA()">📱 Добавить на главный экран</a>
+
+        <div class="footer">
+            Часы словами на русском языке<br>
+            Работает без установки приложения
+        </div>
+    </div>
+
+    <script>
+        // Словарь для преобразования цифр в слова
+        const numberWords = {
+            0: 'ноль',
+            1: 'один',
+            2: 'два',
+            3: 'три',
+            4: 'четыре',
+            5: 'пять',
+            6: 'шесть',
+            7: 'семь',
+            8: 'восемь',
+            9: 'девять',
+            10: 'десять',
+            11: 'одиннадцать',
+            12: 'двенадцать',
+            13: 'тринадцать',
+            14: 'четырнадцать',
+            15: 'пятнадцать',
+            16: 'шестнадцать',
+            17: 'семнадцать',
+            18: 'восемнадцать',
+            19: 'девятнадцать',
+            20: 'двадцать',
+            21: 'двадцать один',
+            22: 'двадцать два',
+            23: 'двадцать три',
+            30: 'тридцать',
+            40: 'сорок',
+            50: 'пятьдесят'
+        };
+
+        function getTimeWords(hours, minutes) {
+            let timeString = '';
+
+            // Часы
+            if (hours === 0) {
+                timeString = 'двенадцать';
+            } else if (hours <= 12) {
+                timeString = numberWords[hours];
+            } else {
+                timeString = numberWords[hours - 12];
+            }
+
+            // Минуты
+            if (minutes === 0) {
+                timeString += ' ровно';
+            } else if (minutes < 21) {
+                timeString += ' ' + numberWords[minutes];
+            } else if (minutes < 30) {
+                timeString += ' ' + numberWords[20] + ' ' + numberWords[minutes - 20];
+            } else if (minutes === 30) {
+                timeString += ' тридцать';
+            } else if (minutes < 40) {
+                timeString += ' тридцать ' + numberWords[minutes - 30];
+            } else if (minutes === 40) {
+                timeString += ' сорок';
+            } else if (minutes < 50) {
+                timeString += ' сорок ' + numberWords[minutes - 40];
+            } else if (minutes === 50) {
+                timeString += ' пятьдесят';
+            } else {
+                timeString += ' пятьдесят ' + numberWords[minutes - 50];
+            }
+
+            return timeString;
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+
+            const timeWords = getTimeWords(hours, minutes);
+            const digitalTime = now.toLocaleTimeString('ru-RU', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            document.getElementById('timeDisplay').textContent = timeWords;
+            document.getElementById('timeWords').textContent = timeWords;
+            document.getElementById('digitalTime').textContent = digitalTime;
+        }
+
+        function installPWA() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(() => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            }
+
+            alert('Чтобы добавить на главный экран:\n1. Нажмите кнопку "Поделиться" в Safari\n2. Выберите "Добавить на главный экран"\n3. Нажмите "Добавить"');
+        }
+
+        // Обновляем время каждую секунду
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // PWA манифест
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
