@@ -18,8 +18,8 @@ jobs:
     env:
       PROJECT_PATH: ios
       DERIVED_DATA_PATH: build/DerivedData
-      WORKSPACE: WordClockWidgets.xcworkspace
-      SCHEME: WordClockWidgets
+      PROJECT_FILE: WordClockWidgets.xcodeproj
+      TARGET: WordClockWidgets
       CONFIGURATION: Release
       DESTINATION: generic/platform=ios
       
@@ -45,50 +45,32 @@ jobs:
           echo "=== Project Structure ==="
           find . -type f \( -name "*.swift" -o -name "*.plist" \) | sort
           
-      - name: Create workspace
-        run: |
-          cd $PROJECT_PATH
-          if [ ! -d "$WORKSPACE" ]; then
-            echo "Creating workspace..."
-            mkdir -p "$WORKSPACE"
-            cat > "$WORKSPACE/contents.xcworkspacedata" << 'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<Workspace version = "1.0">
-   <FileRef location = "group:WordClockWidgets">
-   </FileRef>
-   <FileRef location = "group:WordClockWidgetsWidget">
-   </FileRef>
-</Workspace>
-EOF
-          fi
-          ls -la "$WORKSPACE"
-      
       - name: Build for iOS Simulator
         run: |
           cd $PROJECT_PATH
-          
+
           echo "=== Starting Build ==="
           xcodebuild \
-            -workspace "$WORKSPACE" \
-            -scheme "$SCHEME" \
+            -project "$PROJECT_FILE" \
+            -target "$TARGET" \
             -configuration "$CONFIGURATION" \
             -destination "platform=iOS Simulator,name=iPhone XS" \
             -derivedDataPath "$DERIVED_DATA_PATH" \
-            -verbose \
+            CODE_SIGNING_ALLOWED=NO \
             build
-            
+
       - name: Build for Device (Release)
         run: |
           cd $PROJECT_PATH
-          
+
           echo "=== Building for Device ==="
           xcodebuild \
-            -workspace "$WORKSPACE" \
-            -scheme "$SCHEME" \
+            -project "$PROJECT_FILE" \
+            -target "$TARGET" \
             -configuration "$CONFIGURATION" \
             -destination generic/platform=ios \
             -derivedDataPath "$DERIVED_DATA_PATH" \
-            -verbose \
+            CODE_SIGNING_ALLOWED=NO \
             build
       
       - name: List build artifacts
@@ -102,69 +84,69 @@ EOF
           cd $PROJECT_PATH
           mkdir -p build
           cat > build/BUILD_REPORT.md << 'EOF'
-# WordClockWidgets iOS - Build Report
-
-## Build Information
-- **Branch**: ${{ github.ref }}
-- **Commit**: ${{ github.sha }}
-- **Actor**: ${{ github.actor }}
-
-## Xcode Details
-- **Xcode Version**: $(xcodebuild -version | head -1)
-- **macOS Runner**: $(sw_vers -productVersion)
-
-## Build Configuration
-- **Scheme**: WordClockWidgets
-- **Configuration**: Release
-- **Target Device**: iPhone XS
-- **Minimum iOS**: 14.0
-
-## Swift Files Compiled
-$(find . -name "*.swift" 2>/dev/null | wc -l) Swift source files
-
-## Build Status
-✅ Build completed successfully on macOS runner
-
-## Next Steps
-
-### Local Development
-1. On macOS with Xcode (macOS 13+, Xcode 15+):
-   ```bash
-   cd ios/
-   open WordClockWidgets.xcworkspace
-   ```
-2. Select iPhone XS simulator or device
-3. Press Cmd+B to build
-4. Press Cmd+R to run
-
-### Device Installation
-1. Connect iPhone XS via USB
-2. Trust the computer on device
-3. In Xcode: Select device → Press Cmd+R
-4. Follow instructions in DEVICE_INSTALLATION.md
-
-### App Store Distribution
-1. Update Bundle ID to your domain
-2. Create App Store Connect record
-3. Archive and submit
-4. See BUILD_GUIDE.md for details
-
-## Compatibility Matrix
-| Feature | Support |
-|---------|---------|
-| iOS 14.0+ | ✅ Full |
-| iOS 18.4.1 | ✅ Optimized |
-| iPhone XS | ✅ Primary target |
-| WidgetKit | ✅ Supported |
-| SwiftUI | ✅ Modern UI |
-| Dark Mode | ✅ Supported |
-| Russian Text | 🇷🇺 Optimized |
-
-## Documentation
-- **BUILD_GUIDE.md** - Detailed build instructions
-- **DEVICE_INSTALLATION.md** - Step-by-step device setup
-- **DEPLOYMENT_READY.md** - Pre-deployment checklist
-EOF
+          # WordClockWidgets iOS - Build Report
+          
+          ## Build Information
+          - **Branch**: ${{ github.ref }}
+          - **Commit**: ${{ github.sha }}
+          - **Actor**: ${{ github.actor }}
+          
+          ## Xcode Details
+          - **Xcode Version**: $(xcodebuild -version | head -1)
+          - **macOS Runner**: $(sw_vers -productVersion)
+          
+          ## Build Configuration
+          - **Scheme**: WordClockWidgets
+          - **Configuration**: Release
+          - **Target Device**: iPhone XS
+          - **Minimum iOS**: 14.0
+          
+          ## Swift Files Compiled
+          $(find . -name "*.swift" 2>/dev/null | wc -l) Swift source files
+          
+          ## Build Status
+          ✅ Build completed successfully on macOS runner
+          
+          ## Next Steps
+          
+          ### Local Development
+          1. On macOS with Xcode (macOS 13+, Xcode 15+):
+             ```bash
+             cd ios/
+             open WordClockWidgets.xcworkspace
+             ```
+          2. Select iPhone XS simulator or device
+          3. Press Cmd+B to build
+          4. Press Cmd+R to run
+          
+          ### Device Installation
+          1. Connect iPhone XS via USB
+          2. Trust the computer on device
+          3. In Xcode: Select device → Press Cmd+R
+          4. Follow instructions in DEVICE_INSTALLATION.md
+          
+          ### App Store Distribution
+          1. Update Bundle ID to your domain
+          2. Create App Store Connect record
+          3. Archive and submit
+          4. See BUILD_GUIDE.md for details
+          
+          ## Compatibility Matrix
+          | Feature | Support |
+          |---------|---------|
+          | iOS 14.0+ | ✅ Full |
+          | iOS 18.4.1 | ✅ Optimized |
+          | iPhone XS | ✅ Primary target |
+          | WidgetKit | ✅ Supported |
+          | SwiftUI | ✅ Modern UI |
+          | Dark Mode | ✅ Supported |
+          | Russian Text | 🇷🇺 Optimized |
+          
+          ## Documentation
+          - **BUILD_GUIDE.md** - Detailed build instructions
+          - **DEVICE_INSTALLATION.md** - Step-by-step device setup
+          - **DEPLOYMENT_READY.md** - Pre-deployment checklist
+          EOF
           cat build/BUILD_REPORT.md
       
       - name: Upload build artifacts

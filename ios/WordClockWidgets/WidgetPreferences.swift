@@ -5,7 +5,7 @@
 //  Created by GitHub Copilot on 2026-04-04.
 //
 
-import Foundation
+import UIKit
 
 class WidgetPreferences {
     private static let defaults = UserDefaults.standard
