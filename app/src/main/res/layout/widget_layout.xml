@@ -22,7 +22,8 @@
             <FrameLayout
                 android:id="@+id/hour_wrapper"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
                 <TextView
                     android:id="@+id/hour_text"
                     android:layout_width="wrap_content"
@@ -39,7 +40,8 @@
             <FrameLayout
                 android:id="@+id/minute_wrapper"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
                 <TextView
                     android:id="@+id/minute_text"
                     android:layout_width="wrap_content"
@@ -56,7 +58,8 @@
             <FrameLayout
                 android:id="@+id/day_night_wrapper"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
                 <TextView
                     android:id="@+id/day_night_text"
                     android:layout_width="wrap_content"
@@ -72,7 +75,8 @@
             <FrameLayout
                 android:id="@+id/date_wrapper"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
                 <TextView
                     android:id="@+id/date_text"
                     android:layout_width="wrap_content"
@@ -88,7 +92,8 @@
             <FrameLayout
                 android:id="@+id/day_of_week_wrapper"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
                 <TextView
                     android:id="@+id/day_of_week_text"
                     android:layout_width="wrap_content"
@@ -109,7 +114,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:layout_gravity="center">
                 <TextView
                     android:id="@+id/dot_view"
                     android:layout_width="4dp"
